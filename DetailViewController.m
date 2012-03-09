@@ -9,11 +9,11 @@
 #import "DetailViewController.h"
 
 
-//static NSString *buttonNumber;
+static NSString *buttonNumber = @"1";
+//static NSArray *array [[NSArray alloc] initWithObjects: 
 
 @implementation DetailViewController
-@synthesize TabPoint;
-
+@synthesize SegmentControl;
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib
 - (void)viewDidLoad
@@ -23,6 +23,7 @@
 
 - (void)viewDidUnload
 {
+    [self setSegmentControl:nil];
     //[self setTabPoint:nil];
 	// Release any retained subviews of the main view.
 	// e.g. self.myOutlet = nil;
@@ -30,13 +31,14 @@
 
 - (void)dealloc
 {
-    [TabPoint release];
+    //[TabPoint release];
+    [SegmentControl release];
     [super dealloc];
 }
 
 //added to give pop out view on whether to send message or not
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
-    //if (buttonNumber == @"1"){
+    if (buttonNumber == @"1"){
         UITouch *touch = [touches anyObject];
         CGPoint point = [touch locationInView:self.view];
         CGFloat X = point.x;
@@ -56,7 +58,14 @@
         [actionSheet showInView:self.view];
         
 
-        //}
+        }
+    
+    //else if (buttonNumber == @"2"){
+        UITouch *touch = [touches anyObject];
+        CGPoint point = [touch locationInView:self.view];
+        
+        
+    //}
 }
 
 - (void) actionSheet :(UIActionSheet *)actionSheet 
@@ -76,16 +85,15 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
  
 }
 
-/**- (IBAction)buttonPressed:(id)sender {
+
+- (IBAction)Selected:(id)sender {
+    
     if ([sender selectedSegmentIndex]==0){
         buttonNumber = @"1";
     }
     else {
         buttonNumber = @"2";
     }
+
 }
- */
-
-
-
 @end

@@ -10,7 +10,8 @@
 #import <UIKit/UIKit.h>
 //@interface DetailViewController : UIViewController
 @interface DetailViewController : UIViewController <UIActionSheetDelegate>
-@property (retain, nonatomic) IBOutlet UISegmentedControl *TabPoint;
-- (IBAction)buttonPressed:(id)sender;
+@property (retain, nonatomic) IBOutlet UISegmentedControl *SegmentControl;
+- (IBAction)Selected:(id)sender;
+
 
 @end
