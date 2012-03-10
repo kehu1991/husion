@@ -8,15 +8,11 @@
  */
 
 #import <UIKit/UIKit.h>
-
-
-
 //@interface DetailViewController : UIViewController
 @interface DetailViewController : UIViewController <UIActionSheetDelegate>
 @property (retain, nonatomic) IBOutlet UISegmentedControl *SegmentControl;
-@property (retain, nonatomic) IBOutlet UISlider *Slider;
-
 - (IBAction)Selected:(id)sender;
+@property (retain, nonatomic) IBOutlet UISlider *slider;
 
 
 @end

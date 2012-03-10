@@ -22,8 +22,6 @@
 		537DA6BE1108F8460045D54C /* DetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 537DA6BC1108F8460045D54C /* DetailViewController.xib */; };
 		B44F5BC114F8344300BB1536 /* grid.gif in Resources */ = {isa = PBXBuildFile; fileRef = B44F5BC014F8344200BB1536 /* grid.gif */; };
 		B49DC7F815086779001E4D38 /* default.png in Resources */ = {isa = PBXBuildFile; fileRef = B49DC7F715086779001E4D38 /* default.png */; };
-		B4DB008C150ADED00037EDE3 /* ASLPointView.m in Sources */ = {isa = PBXBuildFile; fileRef = B4DB008A150ADED00037EDE3 /* ASLPointView.m */; };
-		B4DB008D150ADED00037EDE3 /* ASLPointView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B4DB008B150ADED00037EDE3 /* ASLPointView.xib */; };
 		B4E5703314F89DED0042418A /* robot.png in Resources */ = {isa = PBXBuildFile; fileRef = B4E5703214F89DED0042418A /* robot.png */; };
 		B4E5703714F8A0270042418A /* LabView.m in Sources */ = {isa = PBXBuildFile; fileRef = B4E5703614F8A0270042418A /* LabView.m */; };
 		CB6C7CB211D53FDA00AC7FA8 /* flag.png in Resources */ = {isa = PBXBuildFile; fileRef = CB6C7CA611D53FDA00AC7FA8 /* flag.png */; };
@@ -65,9 +63,6 @@
 		537DA6BD1108F8460045D54C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DetailViewController.xib; sourceTree = "<group>"; };
 		B44F5BC014F8344200BB1536 /* grid.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = grid.gif; sourceTree = "<group>"; };
 		B49DC7F715086779001E4D38 /* default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default.png; sourceTree = "<group>"; };
-		B4DB0089150ADED00037EDE3 /* ASLPointView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASLPointView.h; sourceTree = "<group>"; };
-		B4DB008A150ADED00037EDE3 /* ASLPointView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASLPointView.m; sourceTree = "<group>"; };
-		B4DB008B150ADED00037EDE3 /* ASLPointView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ASLPointView.xib; sourceTree = "<group>"; };
 		B4E5703214F89DED0042418A /* robot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = robot.png; path = ../robot.png; sourceTree = "<group>"; };
 		B4E5703514F8A0270042418A /* LabView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabView.h; sourceTree = "<group>"; };
 		B4E5703614F8A0270042418A /* LabView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LabView.m; sourceTree = "<group>"; };
@@ -167,11 +162,8 @@
 				533D375A10B329010057E53B /* SFAnnotation.m */,
 				534BB35010B4A47500C8BE22 /* BridgeAnnotation.h */,
 				534BB35110B4A47500C8BE22 /* BridgeAnnotation.m */,
-				B4DB0089150ADED00037EDE3 /* ASLPointView.h */,
-				B4DB008A150ADED00037EDE3 /* ASLPointView.m */,
 				B4E5703514F8A0270042418A /* LabView.h */,
 				B4E5703614F8A0270042418A /* LabView.m */,
-				B4DB008B150ADED00037EDE3 /* ASLPointView.xib */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -265,7 +257,6 @@
 				B44F5BC114F8344300BB1536 /* grid.gif in Resources */,
 				B4E5703314F89DED0042418A /* robot.png in Resources */,
 				B49DC7F815086779001E4D38 /* default.png in Resources */,
-				B4DB008D150ADED00037EDE3 /* ASLPointView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,7 +274,6 @@
 				534BB35210B4A47500C8BE22 /* BridgeAnnotation.m in Sources */,
 				537DA6BA1108F80B0045D54C /* DetailViewController.m in Sources */,
 				B4E5703714F8A0270042418A /* LabView.m in Sources */,
-				B4DB008C150ADED00037EDE3 /* ASLPointView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
