@@ -24,7 +24,7 @@ static NSString *buttonNumber = @"1";
 - (void)viewDidUnload
 {
     [self setSegmentControl:nil];
-    //[self setTabPoint:nil];
+    
 	// Release any retained subviews of the main view.
 	// e.g. self.myOutlet = nil;
 }
@@ -47,15 +47,24 @@ static NSString *buttonNumber = @"1";
         NSString *b = [NSString stringWithFormat:@"%.2f", Y];
         
         
-        NSString *warning = [NSString stringWithFormat:@"The point value is (%@,%@),%@", a, b, @" Are you sure?"];
+        NSString *warning = [NSString stringWithFormat:@"The point value is (%@,%@).", a, b];
         
-        UIActionSheet *actionSheet = [[UIActionSheet alloc]
+        /**UIActionSheet *actionSheet = [[UIActionSheet alloc]
                                       initWithTitle: warning 
                                       delegate:self 
                                       cancelButtonTitle:@"No Way!" 
                                       destructiveButtonTitle:@"Yes, I'm Sure!" 
                                       otherButtonTitles:nil];
-        [actionSheet showInView:self.view];
+        [actionSheet showInView:self.view];*/
+        
+        UIAlertView *alert = [[UIAlertView alloc] 
+                              initWithTitle: warning 
+                              message: @"Are you sure?" 
+                              delegate: self 
+                              cancelButtonTitle: @"No way!" 
+                              otherButtonTitles: @"Yes, I'm Sure!",nil];
+        [alert show];
+
         
 
         }
@@ -68,7 +77,7 @@ static NSString *buttonNumber = @"1";
     //}
 }
 
-- (void) actionSheet :(UIActionSheet *)actionSheet 
+/**- (void) actionSheet :(UIActionSheet *)actionSheet 
 didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex != [actionSheet cancelButtonIndex])
@@ -84,7 +93,7 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     }
  
 }
-
+*/
 
 - (IBAction)Selected:(id)sender {
     
