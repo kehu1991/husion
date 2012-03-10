@@ -8,12 +8,14 @@
 
 #import "DetailViewController.h"
 
-
 static NSString *buttonNumber = @"1";
+
 //static NSArray *array [[NSArray alloc] initWithObjects: 
 
 @implementation DetailViewController
 @synthesize SegmentControl;
+
+
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib
 - (void)viewDidLoad
@@ -23,7 +25,7 @@ static NSString *buttonNumber = @"1";
 
 - (void)viewDidUnload
 {
-    [self setSegmentControl:nil];
+       [self setSegmentControl:nil];
     
 	// Release any retained subviews of the main view.
 	// e.g. self.myOutlet = nil;
@@ -31,10 +33,37 @@ static NSString *buttonNumber = @"1";
 
 - (void)dealloc
 {
-    //[TabPoint release];
     [SegmentControl release];
+    
     [super dealloc];
 }
+/**
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+	[super viewWillDisappear:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+	[super viewDidDisappear:animated];
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    // Return YES for supported orientations
+    return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+}
+*/
 
 //added to give pop out view on whether to send message or not
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
@@ -69,40 +98,41 @@ static NSString *buttonNumber = @"1";
 
         }
     
-    //else if (buttonNumber == @"2"){
+    else {
         UITouch *touch = [touches anyObject];
         CGPoint point = [touch locationInView:self.view];
         
         
-    //}
+    }
 }
+
+
 
 /**- (void) actionSheet :(UIActionSheet *)actionSheet 
 didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex != [actionSheet cancelButtonIndex])
     {
-        NSString *msg = nil;
-        
-        msg = @"lala";
-        
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"something has done" message: msg delegate: self cancelButtonTitle:@"Phew!" otherButtonTitles: nil];
-        [alert show];
-        
-            
+                    
     }
  
-}
-*/
+}*/
+
 
 - (IBAction)Selected:(id)sender {
     
-    if ([sender selectedSegmentIndex]==0){
+    if ([sender selectedSegmentIndex] == 0){
         buttonNumber = @"1";
+        //slider.hidden = NO;
     }
-    else {
+    if ([sender selectedSegmentIndex] ==1){
         buttonNumber = @"2";
+        //slider.hidden = YES;
+
     }
 
 }
+    
+
+
 @end
