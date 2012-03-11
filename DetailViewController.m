@@ -9,14 +9,21 @@
 #import "DetailViewController.h"
 
 
-static NSString *buttonNumber = @"1";
-//static NSArray *array [[NSArray alloc] initWithObjects: 
+static NSString *buttonNumber = @"1"; //"1" stands for Point and "2" stands for "Sketch"
+static NSString *directionSelected; //directions selected in Point
+static NSString *confidence = @"50";// confidence for point input
+static NSString *a;
+static NSString *b;
 
 @implementation DetailViewController
+@synthesize confidenceLabel;
+@synthesize pointValueLabel;
 
 @synthesize slider;
 @synthesize directionPicker;
 @synthesize Button;
+@synthesize PickerLabel;
+@synthesize SliderLabel;
 @synthesize SegmentControl;
 @synthesize pickerData;
 
@@ -26,16 +33,24 @@ static NSString *buttonNumber = @"1";
 {
     [super viewDidLoad];
     slider.hidden = YES;
-    NSArray *array = [[NSArray alloc]initWithObjects: @"Right", @"Left", @"lala", nil];
+    NSArray *array = [[NSArray alloc]initWithObjects: @"To the right", @"To the left", @"In front", @"Behind", @"Near around", nil];
     
     self.pickerData = array;
 
     directionPicker.hidden = YES;
     Button.hidden = YES;
+    PickerLabel.hidden = YES;
+    SliderLabel.hidden = YES;
+    confidenceLabel.hidden = YES;
+    pointValueLabel.hidden = YES;
 }
 
 - (void)viewDidUnload
 {
+    [self setPointValueLabel:nil];
+    [self setConfidenceLabel:nil];
+    [self setSliderLabel:nil];
+    [self setPickerLabel:nil];
     [self setButton:nil];
     [self setDirectionPicker:nil];
     
@@ -54,6 +69,10 @@ static NSString *buttonNumber = @"1";
     [slider release];
     [directionPicker release];
     [Button release];
+    [PickerLabel release];
+    [SliderLabel release];
+    [confidenceLabel release];
+    [pointValueLabel release];
     [super dealloc];
 }
 
@@ -64,8 +83,9 @@ static NSString *buttonNumber = @"1";
         CGPoint point = [touch locationInView:self.view];
         CGFloat X = point.x;
         CGFloat Y = point.y;
-        NSString *a = [NSString stringWithFormat:@"%.2f", X];
-        NSString *b = [NSString stringWithFormat:@"%.2f", Y];
+        a = [NSString stringWithFormat:@"%.2f", X];
+        b = [NSString stringWithFormat:@"%.2f", Y];
+        pointValueLabel.text = [NSString stringWithFormat:@"(%@,%@)", a, b];
         
         
         NSString *warning = [NSString stringWithFormat:@"The point value is (%@,%@).", a, b];
@@ -107,6 +127,10 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
         slider.hidden = NO;
         directionPicker.hidden = NO;
         Button.hidden = NO;
+        PickerLabel.hidden = NO;
+        SliderLabel.hidden = NO;
+        confidenceLabel.hidden = NO;
+        pointValueLabel.hidden = NO;
                     
     }
  
@@ -114,20 +138,22 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
 
 
 - (IBAction)Selected:(id)sender {
+    slider.hidden = YES;
+    directionPicker.hidden = YES;
+    Button.hidden = YES;
+    PickerLabel.hidden = YES;
+    SliderLabel.hidden = YES;
+    confidenceLabel.hidden = YES;
+    pointValueLabel.hidden = YES;
         
     if ([sender selectedSegmentIndex]==0){
        
         buttonNumber = @"1";
-        slider.hidden = YES;
-        directionPicker.hidden = YES;
-        Button.hidden = YES;
+        
     }
     else {
         buttonNumber = @"2";
-        slider.hidden = YES;
-        directionPicker.hidden = YES;
-        Button.hidden = YES;
-    }
+            }
 
 }
 
@@ -154,7 +180,8 @@ numberOfRowsInComponent:(NSInteger)component {
     NSInteger row = [directionPicker selectedRowInComponent:0];
     NSString *selected = [pickerData objectAtIndex:row];
     NSString *title = [[NSString alloc] initWithFormat:
-                       @"The direction you selected is %@.", selected];
+                       @"The direction you selected is %@ and your confidence level is %@", selected, confidence];
+    directionSelected = selected;
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Point data is sent!"
                                                     message:title
                                                    delegate:nil
@@ -164,6 +191,15 @@ numberOfRowsInComponent:(NSInteger)component {
     slider.hidden = YES;
     directionPicker.hidden = YES;
     Button.hidden = YES;
+    PickerLabel.hidden = YES;
+    SliderLabel.hidden = YES;
+    confidenceLabel.hidden = YES;
+    pointValueLabel.hidden = YES;
 
+}
+- (IBAction)sliderChanged:(id)sender {
+    int progressAsInt = (int)roundf(slider.value);
+    confidenceLabel.text = [NSString stringWithFormat:@"%d", progressAsInt];
+    confidence = confidenceLabel.text;
 }
 @end

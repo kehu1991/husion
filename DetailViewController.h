@@ -18,4 +18,10 @@
 @property (strong, nonatomic) NSArray *pickerData;
 @property (retain, nonatomic) IBOutlet UIButton *Button;
 
+@property (retain, nonatomic) IBOutlet UILabel *PickerLabel;
+@property (retain, nonatomic) IBOutlet UILabel *SliderLabel;
+- (IBAction)sliderChanged:(id)sender;
+@property (retain, nonatomic) IBOutlet UILabel *confidenceLabel;
+@property (retain, nonatomic) IBOutlet UILabel *pointValueLabel;
+
 @end
