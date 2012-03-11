@@ -13,8 +13,12 @@ static NSString *buttonNumber = @"1";
 //static NSArray *array [[NSArray alloc] initWithObjects: 
 
 @implementation DetailViewController
+
 @synthesize slider;
+@synthesize directionPicker;
+@synthesize Button;
 @synthesize SegmentControl;
+@synthesize pickerData;
 
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib
@@ -22,10 +26,19 @@ static NSString *buttonNumber = @"1";
 {
     [super viewDidLoad];
     slider.hidden = YES;
+    NSArray *array = [[NSArray alloc]initWithObjects: @"Right", @"Left", @"lala", nil];
+    
+    self.pickerData = array;
+
+    directionPicker.hidden = YES;
+    Button.hidden = YES;
 }
 
 - (void)viewDidUnload
 {
+    [self setButton:nil];
+    [self setDirectionPicker:nil];
+    
     [self setSlider:nil];
     [self setSegmentControl:nil];
     
@@ -35,10 +48,12 @@ static NSString *buttonNumber = @"1";
 
 - (void)dealloc
 {
-    //[TabPoint release];
+    
     [SegmentControl release];
     
     [slider release];
+    [directionPicker release];
+    [Button release];
     [super dealloc];
 }
 
@@ -90,7 +105,9 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     {
        
         slider.hidden = NO;
-            
+        directionPicker.hidden = NO;
+        Button.hidden = NO;
+                    
     }
  
 }
@@ -101,10 +118,52 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     if ([sender selectedSegmentIndex]==0){
        
         buttonNumber = @"1";
+        slider.hidden = YES;
+        directionPicker.hidden = YES;
+        Button.hidden = YES;
     }
     else {
         buttonNumber = @"2";
+        slider.hidden = YES;
+        directionPicker.hidden = YES;
+        Button.hidden = YES;
     }
+
+}
+
+#pragma mark -
+#pragma mark Picker Data Source Methods
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+    return 1;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView
+numberOfRowsInComponent:(NSInteger)component {
+    return [pickerData count];
+}
+
+#pragma mark Picker Delegate Methods
+- (NSString *)pickerView:(UIPickerView *)pickerView
+             titleForRow:(NSInteger)row
+            forComponent:(NSInteger)component {
+    return [pickerData objectAtIndex:row];
+}
+
+- (IBAction)ButtonPressed:(id)sender {
+    NSInteger row = [directionPicker selectedRowInComponent:0];
+    NSString *selected = [pickerData objectAtIndex:row];
+    NSString *title = [[NSString alloc] initWithFormat:
+                       @"The direction you selected is %@.", selected];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Point data is sent!"
+                                                    message:title
+                                                   delegate:nil
+                                          cancelButtonTitle:@"Okay"
+                                          otherButtonTitles:nil];
+    [alert show];
+    slider.hidden = YES;
+    directionPicker.hidden = YES;
+    Button.hidden = YES;
 
 }
 @end
