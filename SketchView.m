@@ -1,14 +1,14 @@
 //
-//  LabView.m
+//  SketchView.m
 //  MapCallouts
 //
-//  Created by Ke Hu on 12-2-24.
+//  Created by Ke Hu on 12-3-10.
 //  Copyright (c) 2012年 Cornell University. All rights reserved.
 //
 
-#import "LabView.h"
+#import "SketchView.h"
 
-@implementation LabView
+@implementation SketchView
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -17,12 +17,6 @@
         // Initialization code
     }
     return self;
-}
-
--(IBAction)backgroundTap:(id)sender {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc]
-                                  initWithTitle:@"Are you sure?" delegate:self cancelButtonTitle:@"No Way!" destructiveButtonTitle:@"Yes, I'm Sure!" otherButtonTitles:nil];
-    [actionSheet showInView:self];
 }
 
 /*
