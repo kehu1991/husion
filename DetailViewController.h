@@ -8,8 +8,15 @@
  */
 
 #import <UIKit/UIKit.h>
+
+@class SketchView;
+
 //@interface DetailViewController : UIViewController
 @interface DetailViewController : UIViewController <UIActionSheetDelegate, UIPickerViewDelegate, UIPickerViewDataSource>
+{
+    SketchView *sketchView;
+}
+
 @property (retain, nonatomic) IBOutlet UISegmentedControl *SegmentControl;
 - (IBAction)Selected:(id)sender;
 @property (retain, nonatomic) IBOutlet UISlider *slider;
@@ -23,5 +30,9 @@
 - (IBAction)sliderChanged:(id)sender;
 @property (retain, nonatomic) IBOutlet UILabel *confidenceLabel;
 @property (retain, nonatomic) IBOutlet UILabel *pointValueLabel;
+
+@property (nonatomic, retain) IBOutlet SketchView *sketchView;
+
+
 
 @end

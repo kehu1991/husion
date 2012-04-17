@@ -7,7 +7,7 @@
  */
 
 #import "DetailViewController.h"
-
+#import "SketchView.h"
 
 static NSString *buttonNumber = @"1"; //"1" stands for Point and "2" stands for "Sketch"
 static NSString *directionSelected; //directions selected in Point
@@ -18,6 +18,8 @@ static NSString *b;
 @implementation DetailViewController
 @synthesize confidenceLabel;
 @synthesize pointValueLabel;
+@synthesize sketchView;
+
 
 @synthesize slider;
 @synthesize directionPicker;
@@ -36,6 +38,7 @@ static NSString *b;
     NSArray *array = [[NSArray alloc]initWithObjects: @"To the right", @"To the left", @"In front", @"Behind", @"Near around", nil];
     
     self.pickerData = array;
+    
 
     directionPicker.hidden = YES;
     Button.hidden = YES;
@@ -47,6 +50,7 @@ static NSString *b;
 
 - (void)viewDidUnload
 {
+    
     [self setPointValueLabel:nil];
     [self setConfidenceLabel:nil];
     [self setSliderLabel:nil];
@@ -56,6 +60,7 @@ static NSString *b;
     
     [self setSlider:nil];
     [self setSegmentControl:nil];
+    self.sketchView = nil;
     
 	// Release any retained subviews of the main view.
 	// e.g. self.myOutlet = nil;
@@ -73,12 +78,17 @@ static NSString *b;
     [SliderLabel release];
     [confidenceLabel release];
     [pointValueLabel release];
+    [sketchView release];
+    
     [super dealloc];
 }
 
 //added to give pop out view on whether to send message or not
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+    
+    
     if (buttonNumber == @"1"){
+
         UITouch *touch = [touches anyObject];
         CGPoint point = [touch locationInView:self.view];
         CGFloat X = point.x;
@@ -110,12 +120,8 @@ static NSString *b;
 
         }
     
-    //else if (buttonNumber == @"2"){
-        UITouch *touch = [touches anyObject];
-        CGPoint point = [touch locationInView:self.view];
         
-        
-    //}
+
 }
 
 - (void) actionSheet :(UIActionSheet *)actionSheet 
@@ -153,7 +159,8 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     }
     else {
         buttonNumber = @"2";
-            }
+                    
+    }
 
 }
 

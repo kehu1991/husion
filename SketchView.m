@@ -10,14 +10,43 @@
 
 @implementation SketchView
 
-- (id)initWithFrame:(CGRect)frame
-{
+-(id)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self) {
+        
         // Initialization code
     }
     return self;
+
 }
+
+
+/**- (id)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        
+        // Initialization code
+            }
+    return self;
+}
+
+*/
+
+
+/**- (void)drawRect:(CGRect)rect{
+
+    CGContextRef context = UIGraphicsGetCurrentContext(); 
+    CGContextSetLineWidth(context, 2.0); 
+    UIColor *color= [UIColor blueColor];
+    CGContextSetStrokeColorWithColor(context, color.CGColor); 
+    
+    CGContextMoveToPoint(context, 10.0,10.0 ); 
+    CGContextAddLineToPoint(context, 100.0,100.0); 
+    CGContextStrokePath(context);
+
+
+}*/
 
 /*
 // Only override drawRect: if you perform custom drawing.
