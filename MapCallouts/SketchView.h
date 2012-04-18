@@ -9,12 +9,13 @@
 #import <UIKit/UIKit.h>
 #import <CFNetwork/CFNetwork.h>
 #import "NodeHeartbeatMessage.pb.h"
+#import "SmartPhoneMessages.pb.h"
 
 
 @interface SketchView : UIView <NSStreamDelegate> {
     NSMutableArray *pointList;
     int n;
-    
+    SmartPhoneDataMessage *msg;
     //data to send!!
     NSString *pointx;
     NSString *pointy;
@@ -26,6 +27,7 @@
     NSArray *array2;
     NodeHeartbeatMessage *message;
     int32_t address;
+    NSArray *Object;
 
     
     }

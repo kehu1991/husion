@@ -62,6 +62,7 @@ static NSString *interface = @"Main";//Interface label. Main,
         array = [[NSArray alloc]initWithObjects: @"to the right", @"to the left", @"in front", @"behind", @"near around", @"inside", @"outside", nil];
         
         array2 = [[NSArray alloc]initWithObjects: @"inside", @"outside", nil];
+        Object = [[NSArray alloc]initWithObjects:@" is", @" is not", nil];
         
         
         //default: do Point
@@ -119,7 +120,7 @@ static NSString *interface = @"Main";//Interface label. Main,
 
 - (IBAction)SendButton:(id)sender {
     
-    NSInteger row = [Picker selectedRowInComponent:0];
+    //NSInteger row = [Picker selectedRowInComponent:0];
     //NSString *selected = [pickerData objectAtIndex:row];
     //NSData *dirc = [selected dataUsingEncoding:NSUTF8StringEncoding];
     NSLog(@"%d",n);
@@ -295,13 +296,15 @@ static NSString *interface = @"Main";//Interface label. Main,
 #pragma mark Picker Data Source Methods
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
-    return 1;
+    return 2;
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView
 numberOfRowsInComponent:(NSInteger)component {
     NSArray *values = ( pickerView == Picker ? array : array2 );
-    return [values count];
+    if (component == 1)
+        return [values count];
+    return [Object count];
 }
 
 #pragma mark Picker Delegate Methods
@@ -309,7 +312,9 @@ numberOfRowsInComponent:(NSInteger)component {
              titleForRow:(NSInteger)row
             forComponent:(NSInteger)component {
     NSArray *values = ( pickerView == Picker ? array : array2  );
-    return [values objectAtIndex: row];
+    if (component ==1)
+        return [values objectAtIndex: row];
+    return [Object objectAtIndex:row];
 }
 
 
@@ -358,7 +363,20 @@ numberOfRowsInComponent:(NSInteger)component {
 				clientSocket = -1;
 			} else {
 				printf("Data receive complete. Bytes=%i\n", bytesReceived);
-				SmartPhoneDataMessage *msg = [SmartPhoneDataMessage parseFromData:[NSData dataWithBytes:buffer length:bytesReceived]];
+                int msgLength = ((uint8_t*)buffer)[0];
+                msgLength <<= 8;
+                msgLength += ((uint8_t*)buffer)[1];
+                msgLength <<= 8;
+                msgLength += ((uint8_t*)buffer)[2];
+                msgLength <<= 8;
+                msgLength += ((uint8_t*)buffer)[3];
+                msgLength <<= 8;
+                msgLength = ntohl(msgLength);
+                
+                void *msgData = malloc(msgLength);
+                memcpy(msgData, buffer, msgLength);
+				msg = [SmartPhoneDataMessage parseFromData:[NSData dataWithBytes:buffer length:bytesReceived]];
+                free(msgData);
                 printf("ID: %i, Res: %ix%i\n", msg.id, msg.width, msg.height);
 				
 			}

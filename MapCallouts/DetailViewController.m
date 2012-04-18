@@ -43,8 +43,10 @@
     Picker2.hidden = YES;
     [Picker2 reloadAllComponents];
     [Picker2 selectRow:2 inComponent:0 animated:NO];
+    [Picker2 selectRow:2 inComponent:1 animated:NO];
     [Picker reloadAllComponents];
     [Picker selectRow:2 inComponent:0 animated:NO];
+    [Picker selectRow:2 inComponent:1 animated:NO];
     
     
     [NSThread detachNewThreadSelector: @selector(Runloop) toTarget:self
