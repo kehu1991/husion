@@ -18,10 +18,12 @@
 @interface SmartPhoneNodeMessage : PBGeneratedMessage {
 @private
   BOOL hasId_:1;
+  BOOL hasConfidence_:1;
   BOOL hasSubject_:1;
   BOOL hasPreposition_:1;
   BOOL hasObject_:1;
   int32_t id;
+  int32_t confidence;
   NSString* subject;
   NSString* preposition;
   NSString* object;
@@ -31,10 +33,12 @@
 - (BOOL) hasSubject;
 - (BOOL) hasPreposition;
 - (BOOL) hasObject;
+- (BOOL) hasConfidence;
 @property (readonly) int32_t id;
 @property (readonly, retain) NSString* subject;
 @property (readonly, retain) NSString* preposition;
 @property (readonly, retain) NSString* object;
+@property (readonly) int32_t confidence;
 - (NSArray*) coordinatesList;
 - (SmartPhoneNodeMessage_Point*) coordinatesAtIndex:(int32_t) index;
 
@@ -164,14 +168,23 @@
 - (NSString*) object;
 - (SmartPhoneNodeMessage_Builder*) setObject:(NSString*) value;
 - (SmartPhoneNodeMessage_Builder*) clearObject;
+
+- (BOOL) hasConfidence;
+- (int32_t) confidence;
+- (SmartPhoneNodeMessage_Builder*) setConfidence:(int32_t) value;
+- (SmartPhoneNodeMessage_Builder*) clearConfidence;
 @end
 
 @interface SmartPhoneDataMessage : PBGeneratedMessage {
 @private
+  BOOL hasCenterX_:1;
+  BOOL hasCenterY_:1;
   BOOL hasId_:1;
   BOOL hasWidth_:1;
   BOOL hasHeight_:1;
   BOOL hasMapData_:1;
+  Float64 centerX;
+  Float64 centerY;
   int32_t id;
   int32_t width;
   int32_t height;
@@ -181,10 +194,14 @@
 - (BOOL) hasWidth;
 - (BOOL) hasHeight;
 - (BOOL) hasMapData;
+- (BOOL) hasCenterX;
+- (BOOL) hasCenterY;
 @property (readonly) int32_t id;
 @property (readonly) int32_t width;
 @property (readonly) int32_t height;
 @property (readonly, retain) NSData* mapData;
+@property (readonly) Float64 centerX;
+@property (readonly) Float64 centerY;
 
 + (SmartPhoneDataMessage*) defaultInstance;
 - (SmartPhoneDataMessage*) defaultInstance;
@@ -239,5 +256,15 @@
 - (NSData*) mapData;
 - (SmartPhoneDataMessage_Builder*) setMapData:(NSData*) value;
 - (SmartPhoneDataMessage_Builder*) clearMapData;
+
+- (BOOL) hasCenterX;
+- (Float64) centerX;
+- (SmartPhoneDataMessage_Builder*) setCenterX:(Float64) value;
+- (SmartPhoneDataMessage_Builder*) clearCenterX;
+
+- (BOOL) hasCenterY;
+- (Float64) centerY;
+- (SmartPhoneDataMessage_Builder*) setCenterY:(Float64) value;
+- (SmartPhoneDataMessage_Builder*) clearCenterY;
 @end
 

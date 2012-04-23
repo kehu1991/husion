@@ -2,9 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:../../../Desktop/HUSION/ProtocolBuffers-2.2.0-Source/objectivec/ProtocolBuffers.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "self:MapCallouts.xcodeproj">
    </FileRef>
 </Workspace>

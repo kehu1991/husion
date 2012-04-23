@@ -11,23 +11,32 @@
 #import "NodeHeartbeatMessage.pb.h"
 #import "SmartPhoneMessages.pb.h"
 
-
-@interface SketchView : UIView <NSStreamDelegate> {
+@interface SketchView : UIView {
+    
     NSMutableArray *pointList;
     int n;
-    SmartPhoneDataMessage *msg;
+    SmartPhoneDataMessage *msg; //message received from broadcasting
+    SmartPhoneNodeMessage *msgToSend; //messsage to be sent
+    SmartPhoneNodeMessage_Point *pointToAdd;
+    
     //data to send!!
     NSString *pointx;
     NSString *pointy;
-    NSString *confidence;
+    int confidence;
     NSString *direction;
+    NSString *object;
     
+    UIImageView *imageToDisplay;
+    UIImage *imgToDisplay;
+    UIImage *originalImage;
     
     NSArray *array;
     NSArray *array2;
     NodeHeartbeatMessage *message;
     int32_t address;
-    NSArray *Object;
+    NSArray *Object;//object there or not there
+    UIPickerView *pickerView1;
+    
 
     
     }
@@ -56,14 +65,16 @@
 
 @property (nonatomic, retain) NSString *pointx;
 @property (nonatomic, retain) NSString *pointy;
-@property (nonatomic, retain) NSString *confidence;
 @property (nonatomic, retain) NSString *direction;
 
-@property (retain, nonatomic) IBOutlet UIImageView *image;
 @property (retain, nonatomic) IBOutlet UIImageView *greyBack;
 @property (retain, nonatomic) IBOutlet UIButton *CancelButton;
 - (IBAction)Cancel:(id)sender;
 @property (retain, nonatomic) IBOutlet UIPickerView *Picker2;
+
+@property (retain, nonatomic) IBOutlet UIImageView *imageToDisplay;
+@property (retain, nonatomic) IBOutlet UIButton *freshButton;
+- (IBAction)refresh:(id)sender;
 
 
 @end

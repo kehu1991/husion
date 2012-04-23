@@ -25,6 +25,7 @@ static PBExtensionRegistry* extensionRegistry = nil;
 @property (retain) NSString* subject;
 @property (retain) NSString* preposition;
 @property (retain) NSString* object;
+@property int32_t confidence;
 @end
 
 @implementation SmartPhoneNodeMessage
@@ -58,6 +59,13 @@ static PBExtensionRegistry* extensionRegistry = nil;
   hasObject_ = !!value;
 }
 @synthesize object;
+- (BOOL) hasConfidence {
+  return !!hasConfidence_;
+}
+- (void) setHasConfidence:(BOOL) value {
+  hasConfidence_ = !!value;
+}
+@synthesize confidence;
 - (void) dealloc {
   self.mutableCoordinatesList = nil;
   self.subject = nil;
@@ -71,6 +79,7 @@ static PBExtensionRegistry* extensionRegistry = nil;
     self.subject = @"";
     self.preposition = @"";
     self.object = @"";
+    self.confidence = 0;
   }
   return self;
 }
@@ -120,6 +129,9 @@ static SmartPhoneNodeMessage* defaultSmartPhoneNodeMessageInstance = nil;
   if (self.hasObject) {
     [output writeString:18 value:self.object];
   }
+  if (self.hasConfidence) {
+    [output writeInt32:19 value:self.confidence];
+  }
   [self.unknownFields writeToCodedOutputStream:output];
 }
 - (int32_t) serializedSize {
@@ -143,6 +155,9 @@ static SmartPhoneNodeMessage* defaultSmartPhoneNodeMessageInstance = nil;
   }
   if (self.hasObject) {
     size += computeStringSize(18, self.object);
+  }
+  if (self.hasConfidence) {
+    size += computeInt32Size(19, self.confidence);
   }
   size += self.unknownFields.serializedSize;
   memoizedSerializedSize = size;
@@ -493,6 +508,9 @@ static SmartPhoneNodeMessage_Point* defaultSmartPhoneNodeMessage_PointInstance =
   if (other.hasObject) {
     [self setObject:other.object];
   }
+  if (other.hasConfidence) {
+    [self setConfidence:other.confidence];
+  }
   [self mergeUnknownFields:other.unknownFields];
   return self;
 }
@@ -534,6 +552,10 @@ static SmartPhoneNodeMessage_Point* defaultSmartPhoneNodeMessage_PointInstance =
       }
       case 146: {
         [self setObject:[input readString]];
+        break;
+      }
+      case 152: {
+        [self setConfidence:[input readInt32]];
         break;
       }
     }
@@ -632,6 +654,22 @@ static SmartPhoneNodeMessage_Point* defaultSmartPhoneNodeMessage_PointInstance =
   result.object = @"";
   return self;
 }
+- (BOOL) hasConfidence {
+  return result.hasConfidence;
+}
+- (int32_t) confidence {
+  return result.confidence;
+}
+- (SmartPhoneNodeMessage_Builder*) setConfidence:(int32_t) value {
+  result.hasConfidence = YES;
+  result.confidence = value;
+  return self;
+}
+- (SmartPhoneNodeMessage_Builder*) clearConfidence {
+  result.hasConfidence = NO;
+  result.confidence = 0;
+  return self;
+}
 @end
 
 @interface SmartPhoneDataMessage ()
@@ -639,6 +677,8 @@ static SmartPhoneNodeMessage_Point* defaultSmartPhoneNodeMessage_PointInstance =
 @property int32_t width;
 @property int32_t height;
 @property (retain) NSData* mapData;
+@property Float64 centerX;
+@property Float64 centerY;
 @end
 
 @implementation SmartPhoneDataMessage
@@ -671,6 +711,20 @@ static SmartPhoneNodeMessage_Point* defaultSmartPhoneNodeMessage_PointInstance =
   hasMapData_ = !!value;
 }
 @synthesize mapData;
+- (BOOL) hasCenterX {
+  return !!hasCenterX_;
+}
+- (void) setHasCenterX:(BOOL) value {
+  hasCenterX_ = !!value;
+}
+@synthesize centerX;
+- (BOOL) hasCenterY {
+  return !!hasCenterY_;
+}
+- (void) setHasCenterY:(BOOL) value {
+  hasCenterY_ = !!value;
+}
+@synthesize centerY;
 - (void) dealloc {
   self.mapData = nil;
   [super dealloc];
@@ -681,6 +735,8 @@ static SmartPhoneNodeMessage_Point* defaultSmartPhoneNodeMessage_PointInstance =
     self.width = 0;
     self.height = 0;
     self.mapData = [NSData data];
+    self.centerX = 0;
+    self.centerY = 0;
   }
   return self;
 }
@@ -715,6 +771,12 @@ static SmartPhoneDataMessage* defaultSmartPhoneDataMessageInstance = nil;
   if (self.hasMapData) {
     [output writeData:18 value:self.mapData];
   }
+  if (self.hasCenterX) {
+    [output writeDouble:19 value:self.centerX];
+  }
+  if (self.hasCenterY) {
+    [output writeDouble:20 value:self.centerY];
+  }
   [self.unknownFields writeToCodedOutputStream:output];
 }
 - (int32_t) serializedSize {
@@ -735,6 +797,12 @@ static SmartPhoneDataMessage* defaultSmartPhoneDataMessageInstance = nil;
   }
   if (self.hasMapData) {
     size += computeDataSize(18, self.mapData);
+  }
+  if (self.hasCenterX) {
+    size += computeDoubleSize(19, self.centerX);
+  }
+  if (self.hasCenterY) {
+    size += computeDoubleSize(20, self.centerY);
   }
   size += self.unknownFields.serializedSize;
   memoizedSerializedSize = size;
@@ -823,6 +891,12 @@ static SmartPhoneDataMessage* defaultSmartPhoneDataMessageInstance = nil;
   if (other.hasMapData) {
     [self setMapData:other.mapData];
   }
+  if (other.hasCenterX) {
+    [self setCenterX:other.centerX];
+  }
+  if (other.hasCenterY) {
+    [self setCenterY:other.centerY];
+  }
   [self mergeUnknownFields:other.unknownFields];
   return self;
 }
@@ -858,6 +932,14 @@ static SmartPhoneDataMessage* defaultSmartPhoneDataMessageInstance = nil;
       }
       case 146: {
         [self setMapData:[input readData]];
+        break;
+      }
+      case 153: {
+        [self setCenterX:[input readDouble]];
+        break;
+      }
+      case 161: {
+        [self setCenterY:[input readDouble]];
         break;
       }
     }
@@ -925,6 +1007,38 @@ static SmartPhoneDataMessage* defaultSmartPhoneDataMessageInstance = nil;
 - (SmartPhoneDataMessage_Builder*) clearMapData {
   result.hasMapData = NO;
   result.mapData = [NSData data];
+  return self;
+}
+- (BOOL) hasCenterX {
+  return result.hasCenterX;
+}
+- (Float64) centerX {
+  return result.centerX;
+}
+- (SmartPhoneDataMessage_Builder*) setCenterX:(Float64) value {
+  result.hasCenterX = YES;
+  result.centerX = value;
+  return self;
+}
+- (SmartPhoneDataMessage_Builder*) clearCenterX {
+  result.hasCenterX = NO;
+  result.centerX = 0;
+  return self;
+}
+- (BOOL) hasCenterY {
+  return result.hasCenterY;
+}
+- (Float64) centerY {
+  return result.centerY;
+}
+- (SmartPhoneDataMessage_Builder*) setCenterY:(Float64) value {
+  result.hasCenterY = YES;
+  result.centerY = value;
+  return self;
+}
+- (SmartPhoneDataMessage_Builder*) clearCenterY {
+  result.hasCenterY = NO;
+  result.centerY = 0;
   return self;
 }
 @end

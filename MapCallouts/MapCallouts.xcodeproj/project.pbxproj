@@ -21,8 +21,8 @@
 		537DA6BA1108F80B0045D54C /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 537DA6B91108F80B0045D54C /* DetailViewController.m */; };
 		537DA6BE1108F8460045D54C /* DetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 537DA6BC1108F8460045D54C /* DetailViewController.xib */; };
 		B409DCC61537AE850061BB2C /* TCPConnectionMethods.c in Sources */ = {isa = PBXBuildFile; fileRef = B409DCC41537AE850061BB2C /* TCPConnectionMethods.c */; };
-		B409DCC91537B20F0061BB2C /* SmartPhoneMessages.pb.m in Sources */ = {isa = PBXBuildFile; fileRef = B409DCC81537B20F0061BB2C /* SmartPhoneMessages.pb.m */; };
 		B42A720B153624EE006E94A6 /* libProtocolBuffers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B42A720315361E13006E94A6 /* libProtocolBuffers.a */; };
+		B446F2431544F8B2009A610E /* SmartPhoneMessages.pb.m in Sources */ = {isa = PBXBuildFile; fileRef = B446F2421544F3F5009A610E /* SmartPhoneMessages.pb.m */; };
 		B44F3820150EBA730035A084 /* SketchView.m in Sources */ = {isa = PBXBuildFile; fileRef = B44F381F150EBA730035A084 /* SketchView.m */; };
 		B44F382B1516D2440035A084 /* robot.png in Resources */ = {isa = PBXBuildFile; fileRef = B44F382A1516D2440035A084 /* robot.png */; };
 		B44F382E1516D2640035A084 /* RhodesBasement.png in Resources */ = {isa = PBXBuildFile; fileRef = B44F382D1516D2640035A084 /* RhodesBasement.png */; };
@@ -103,10 +103,10 @@
 		537DA6BD1108F8460045D54C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DetailViewController.xib; sourceTree = "<group>"; };
 		B409DCC41537AE850061BB2C /* TCPConnectionMethods.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = TCPConnectionMethods.c; sourceTree = "<group>"; };
 		B409DCC51537AE850061BB2C /* TCPConnectionMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPConnectionMethods.h; sourceTree = "<group>"; };
-		B409DCC71537B20F0061BB2C /* SmartPhoneMessages.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SmartPhoneMessages.pb.h; sourceTree = "<group>"; };
-		B409DCC81537B20F0061BB2C /* SmartPhoneMessages.pb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SmartPhoneMessages.pb.m; sourceTree = "<group>"; };
 		B42A71F815361E13006E94A6 /* ProtocolBuffers.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ProtocolBuffers.xcodeproj; path = ../ProtocolBuffers/ProtocolBuffers.xcodeproj; sourceTree = "<group>"; };
 		B42A720815361E5B006E94A6 /* ProtocolBuffers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProtocolBuffers.h; path = ../ProtocolBuffers/Classes/ProtocolBuffers.h; sourceTree = "<group>"; };
+		B446F2411544F3F5009A610E /* SmartPhoneMessages.pb.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SmartPhoneMessages.pb.h; sourceTree = "<group>"; };
+		B446F2421544F3F5009A610E /* SmartPhoneMessages.pb.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SmartPhoneMessages.pb.m; sourceTree = "<group>"; };
 		B44F381E150EBA730035A084 /* SketchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SketchView.h; sourceTree = "<group>"; };
 		B44F381F150EBA730035A084 /* SketchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SketchView.m; sourceTree = "<group>"; };
 		B44F382A1516D2440035A084 /* robot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = robot.png; sourceTree = "<group>"; };
@@ -219,8 +219,6 @@
 		CB6C7CA311D53FA900AC7FA8 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				B409DCC71537B20F0061BB2C /* SmartPhoneMessages.pb.h */,
-				B409DCC81537B20F0061BB2C /* SmartPhoneMessages.pb.m */,
 				B409DCC41537AE850061BB2C /* TCPConnectionMethods.c */,
 				B409DCC51537AE850061BB2C /* TCPConnectionMethods.h */,
 				B42A720815361E5B006E94A6 /* ProtocolBuffers.h */,
@@ -236,6 +234,8 @@
 				534BB35110B4A47500C8BE22 /* BridgeAnnotation.m */,
 				B44F381E150EBA730035A084 /* SketchView.h */,
 				B44F381F150EBA730035A084 /* SketchView.m */,
+				B446F2411544F3F5009A610E /* SmartPhoneMessages.pb.h */,
+				B446F2421544F3F5009A610E /* SmartPhoneMessages.pb.m */,
 				B4B15E45152F92DA00828DBD /* NodeHeartbeatMessage.pb.h */,
 				B4B15E46152F92DB00828DBD /* NodeHeartbeatMessage.pb.m */,
 			);
@@ -383,6 +383,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B446F2431544F8B2009A610E /* SmartPhoneMessages.pb.m in Sources */,
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				5321F1870F7AE57A00EC9E3A /* AppDelegate.m in Sources */,
 				533D375B10B329010057E53B /* SFAnnotation.m in Sources */,
@@ -392,7 +393,6 @@
 				B44F3820150EBA730035A084 /* SketchView.m in Sources */,
 				B4B15E47152F92DB00828DBD /* NodeHeartbeatMessage.pb.m in Sources */,
 				B409DCC61537AE850061BB2C /* TCPConnectionMethods.c in Sources */,
-				B409DCC91537B20F0061BB2C /* SmartPhoneMessages.pb.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

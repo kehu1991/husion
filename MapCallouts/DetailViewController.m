@@ -1,6 +1,7 @@
 
 #import "DetailViewController.h"
 #import "NodeHeartbeatMessage.pb.h"
+#import "SketchView.h"
 #include <ifaddrs.h>
 #include <arpa/inet.h>
 
@@ -14,6 +15,7 @@
 
 @implementation DetailViewController
 @synthesize Picker2;
+@synthesize background;
 @synthesize image;
 @synthesize CancelButton;
 @synthesize Picker;
@@ -24,6 +26,7 @@
 @synthesize Slider;
 @synthesize Button;
 
+
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib
 
 - (void)viewDidLoad
@@ -32,6 +35,8 @@
     [super viewDidLoad];
     
     //set items in input interface invisible to user when initialized
+    //imgBefore = FALSE;
+    //imgLater = FALSE;
     label1.hidden = YES;
     label2.hidden = YES;
     Slider.hidden = YES;
@@ -42,15 +47,24 @@
     CancelButton.hidden = YES;
     Picker2.hidden = YES;
     [Picker2 reloadAllComponents];
-    [Picker2 selectRow:2 inComponent:0 animated:NO];
-    [Picker2 selectRow:2 inComponent:1 animated:NO];
+    [Picker2 selectRow:1 inComponent:0 animated:NO];
+    [Picker2 selectRow:1 inComponent:1 animated:NO];
     [Picker reloadAllComponents];
-    [Picker selectRow:2 inComponent:0 animated:NO];
-    [Picker selectRow:2 inComponent:1 animated:NO];
-    
+    [Picker selectRow:1 inComponent:0 animated:NO];
+    [Picker selectRow:1 inComponent:1 animated:NO];
+    [self.background setImage: [UIImage imageNamed:@"rhodes-temp.png"]];
+        
+
     
     [NSThread detachNewThreadSelector: @selector(Runloop) toTarget:self
                            withObject:nil];
+    
+    //[NSThread detachNewThreadSelector: @selector(DataExchangeConnection) toTarget:self withObject:nil];
+    
+    //[self ImageUpdate];
+
+    
+    
 
 
     
@@ -69,6 +83,7 @@
 
 - (void)viewDidUnload
 {
+    [self setBackground:nil];
     [self setPicker2:nil];
     [self setCancelButton:nil];
     [self setImage:nil];
@@ -97,6 +112,7 @@
     [image release];
     [CancelButton release];
     [Picker2 release];
+    [background release];
     [super dealloc];
 }
 
@@ -176,14 +192,7 @@
             //printf("Packet sent\n");
         } else {
             printf("error on send\n");
-            UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle:@"UDP connection failed."
-                                  message:nil 
-                                  delegate:self
-                                  cancelButtonTitle:@"Okay"
-                                  otherButtonTitles:nil];
-            [alert show];
-            
+                        
         }
         
         sleep(1);
@@ -191,5 +200,9 @@
 
     
 }
+
+
+
+
 
 @end

@@ -14,12 +14,11 @@
 #import "NodeHeartbeatMessage.pb.h"
 #import "SmartPhoneMessages.pb.h"
 
-
 static NSString *buttonNumber = @"1"; //"1" stands for Point and "2" stands for "Sketch"
 static NSString *a;
 static NSString *b;
 
-static NSString *confidence = @"50";// confidence for point input
+// confidence for point input
  
 static NSString *interface = @"Main";//Interface label. Main,
 
@@ -36,7 +35,8 @@ static NSString *interface = @"Main";//Interface label. Main,
 @synthesize segmentControl;//point or sketch
 @synthesize confidenceLabel;//label for confidence
 
-@synthesize image;//interior map
+@synthesize imageToDisplay;//interior map
+@synthesize freshButton;
 @synthesize greyBack;//grey background of input interface
 @synthesize array;//array for Picker's data
 @synthesize array2;//array for Picker2's data
@@ -49,7 +49,6 @@ static NSString *interface = @"Main";//Interface label. Main,
 
 @synthesize pointx;
 @synthesize pointy;
-@synthesize confidence;
 @synthesize direction;
 
 
@@ -62,16 +61,18 @@ static NSString *interface = @"Main";//Interface label. Main,
         array = [[NSArray alloc]initWithObjects: @"to the right", @"to the left", @"in front", @"behind", @"near around", @"inside", @"outside", nil];
         
         array2 = [[NSArray alloc]initWithObjects: @"inside", @"outside", nil];
-        Object = [[NSArray alloc]initWithObjects:@" is", @" is not", nil];
+        Object = [[NSArray alloc]initWithObjects:@"It is", @"It is not", nil];
         
-        
+        [self addSubview:imageToDisplay];
+        originalImage = [UIImage imageNamed:@"rhodes-temp.png"];
+       
+        confidence = 50;
         //default: do Point
         self.pickerData = array;
         buttonNumber = @"1";
-        NSLog(@"1");
+       
         
-        [NSThread detachNewThreadSelector: @selector(DataExchangeConnection) toTarget:self
-                               withObject:nil];
+        [NSThread detachNewThreadSelector: @selector(DataExchangeConnection) toTarget:self withObject:nil];
         
 
     }
@@ -81,6 +82,7 @@ static NSString *interface = @"Main";//Interface label. Main,
 
 
 -(void)drawRect:(CGRect)rect{
+        
     
 }
 
@@ -93,11 +95,13 @@ static NSString *interface = @"Main";//Interface label. Main,
     [label1 release];
     [Slider release];
     [confidenceLabel release];
-    [image release];
+    [imageToDisplay release];
     [pickerData release];
     [greyBack release];
     [CancelButton release];
     [Picker2 release];
+    //[backgroundimage release];
+    [freshButton release];
     [super dealloc];
 }
 
@@ -108,26 +112,36 @@ static NSString *interface = @"Main";//Interface label. Main,
     if ([sender selectedSegmentIndex]==0){
         buttonNumber = @"1";
         self.pickerData = array;
-        
     }
     else {
         buttonNumber = @"2";
         self.pickerData = array2;
     }
-    
-    
 }
 
 - (IBAction)SendButton:(id)sender {
     
-    //NSInteger row = [Picker selectedRowInComponent:0];
-    //NSString *selected = [pickerData objectAtIndex:row];
-    //NSData *dirc = [selected dataUsingEncoding:NSUTF8StringEncoding];
-    NSLog(@"%d",n);
-    //for (id obj in pointList)
-        //NSLog(@"%@", obj);
+   
+    NSInteger row = [pickerView1 selectedRowInComponent:0];
+    object = [Object objectAtIndex:row];
+    NSInteger row2 = [pickerView1 selectedRowInComponent:1];
+    NSArray *values = ( pickerView1 == Picker ? array : array2 );
+    direction = [values objectAtIndex:row2];
+    confidence = (int)roundf(Slider.value);
     
-    image.image = [UIImage imageNamed:@"rhodes-temp.png"];
+    NSLog(@"%d",n);
+    NSLog(@"Direction is :%@ \n",direction);
+    NSLog(@"Ojbect is :%@ \n", object);
+    NSLog(@"Confidence is : %d \n", confidence);
+        
+    imageToDisplay.image = originalImage;
+    UIGraphicsBeginImageContext(imageToDisplay.frame.size); 
+    [imageToDisplay.image drawInRect:CGRectMake(0, 0, imageToDisplay.frame.size.width, imageToDisplay.frame.size.height)];
+    
+    imageToDisplay.image = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+
     Slider.hidden = YES;
     Picker.hidden = YES;
     Button.hidden = YES;
@@ -138,33 +152,37 @@ static NSString *interface = @"Main";//Interface label. Main,
     confidenceLabel.hidden = YES;
     greyBack.hidden = YES;
     segmentControl.hidden = NO;
-    image.hidden = NO;
+    imageToDisplay.hidden = NO;
     interface = @"Main";
     
+    
     //TCP sending method...
+    //msgToSend = [[[[[[SmartPhoneNodeMessage builder]setId:(int32_t)5] setPreposition:direction] setObject:object] setConfidence:(int32_t) confidence] build];
+    
+
+    
+    
     
     n= 0;
     
     [pointList removeAllObjects];
+    Slider.value = 50; 
+    confidenceLabel.text = @"50";
+    confidence = 50;
+    
 }
 
 - (IBAction)SliderChanged:(id)sender {
     int progressAsInt = (int)roundf(Slider.value);
     confidenceLabel.text = [NSString stringWithFormat:@"%d", progressAsInt];
-    confidence = confidenceLabel.text;
     
 }
 
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
-    
-    
     if (interface == @"Main"){
-        
         if (buttonNumber == @"1"){
-            
             // point data interface
-            
             n=1;
             UITouch *touch = [touches anyObject];
             CGPoint point = [touch locationInView:self];
@@ -178,11 +196,12 @@ static NSString *interface = @"Main";//Interface label. Main,
             
             NSData *pointObject = [NSData dataWithBytes:&point length:sizeof(CGPoint)];
             [pointList addObject:pointObject];
+            originalImage = [imageToDisplay.image copy];
             
             
-            UIGraphicsBeginImageContext(image.frame.size); 
+            UIGraphicsBeginImageContext(imageToDisplay.frame.size); 
             CGContextRef ctx = UIGraphicsGetCurrentContext();   
-            [image.image drawInRect:CGRectMake(0, 0, image.frame.size.width, image.frame.size.height)];
+            [imageToDisplay.image drawInRect:CGRectMake(0, 0, imageToDisplay.frame.size.width, imageToDisplay.frame.size.height)];
             CGContextSetLineCap(ctx, kCGLineCapRound);
             CGContextSetLineWidth(ctx, 5.0);
             CGContextSetRGBStrokeColor(ctx, 1.0, 0.0, 0.0, 1.0);
@@ -190,7 +209,7 @@ static NSString *interface = @"Main";//Interface label. Main,
             CGContextMoveToPoint(ctx, point.x, point.y);
             CGContextAddLineToPoint(ctx, point.x+1, point.y+1);
             CGContextStrokePath(ctx);
-            image.image = UIGraphicsGetImageFromCurrentImageContext();
+            imageToDisplay.image = UIGraphicsGetImageFromCurrentImageContext();
             
             UIGraphicsEndImageContext();
             
@@ -212,7 +231,7 @@ static NSString *interface = @"Main";//Interface label. Main,
         if (buttonNumber == @"2"){
             n=1;
             UITouch *touch = [touches anyObject];
-            CGPoint point = [touch locationInView:image];
+            CGPoint point = [touch locationInView:imageToDisplay];
             InitialPoint = point;
             NSData *pointObject = [NSData dataWithBytes:&point length:sizeof(CGPoint)];
             [pointList addObject:pointObject];
@@ -226,15 +245,15 @@ static NSString *interface = @"Main";//Interface label. Main,
     if (interface == @"Main"){
         
         UITouch *touch = [touches anyObject];
-        PreviousPoint = [touch previousLocationInView:image];
-        CurrentPoint = [touch locationInView:image];
+        PreviousPoint = [touch previousLocationInView:imageToDisplay];
+        CurrentPoint = [touch locationInView:imageToDisplay];
         NSData *pointObject = [NSData dataWithBytes:&CurrentPoint length:sizeof(CGPoint)];
         [pointList addObject:pointObject];
         n = n+1;
 
-        UIGraphicsBeginImageContext(image.frame.size); 
+        UIGraphicsBeginImageContext(imageToDisplay.frame.size); 
         CGContextRef ctx = UIGraphicsGetCurrentContext();   
-        [image.image drawInRect:CGRectMake(0, 0, image.frame.size.width, image.frame.size.height)];
+        [imageToDisplay.image drawInRect:CGRectMake(0, 0, imageToDisplay.frame.size.width, imageToDisplay.frame.size.height)];
         CGContextSetLineCap(ctx, kCGLineCapRound);
         CGContextSetLineWidth(ctx, 5.0);
         CGContextSetRGBStrokeColor(ctx, 1.0, 0.0, 0.0, 1.0);
@@ -242,7 +261,7 @@ static NSString *interface = @"Main";//Interface label. Main,
         CGContextMoveToPoint(ctx, PreviousPoint.x, PreviousPoint.y);
         CGContextAddLineToPoint(ctx, CurrentPoint.x, CurrentPoint.y);
         CGContextStrokePath(ctx);
-        image.image = UIGraphicsGetImageFromCurrentImageContext();
+        imageToDisplay.image = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
     }
     
@@ -252,14 +271,14 @@ static NSString *interface = @"Main";//Interface label. Main,
     if(interface == @"Main"){
         n= n+1;
         UITouch *touch = [touches anyObject];
-        PreviousPoint = [touch previousLocationInView:image];
-        CurrentPoint = [touch locationInView:image];
+        PreviousPoint = [touch previousLocationInView:imageToDisplay];
+        CurrentPoint = [touch locationInView:imageToDisplay];
         NSData *pointObject = [NSData dataWithBytes:&CurrentPoint length:sizeof(CGPoint)];
         [pointList addObject:pointObject];
 
-        UIGraphicsBeginImageContext(image.frame.size); 
+        UIGraphicsBeginImageContext(imageToDisplay.frame.size); 
         CGContextRef ctx = UIGraphicsGetCurrentContext();
-        [image.image drawInRect:CGRectMake(0, 0, image.frame.size.width, image.frame.size.height)];
+        [imageToDisplay.image drawInRect:CGRectMake(0, 0, imageToDisplay.frame.size.width, imageToDisplay.frame.size.height)];
         CGContextSetLineCap(ctx, kCGLineCapRound);
         CGContextSetLineWidth(ctx, 5.0);
         CGContextSetRGBStrokeColor(ctx, 1.0, 0.0, 0.0, 1.0);
@@ -270,7 +289,7 @@ static NSString *interface = @"Main";//Interface label. Main,
         CGContextMoveToPoint(ctx, CurrentPoint.x, CurrentPoint.y);
         CGContextAddLineToPoint(ctx, InitialPoint.x, InitialPoint.y);
         CGContextStrokePath(ctx);
-        image.image = UIGraphicsGetImageFromCurrentImageContext();
+        imageToDisplay.image = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
         
         interface = @"SecondView";
@@ -301,10 +320,13 @@ static NSString *interface = @"Main";//Interface label. Main,
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView
 numberOfRowsInComponent:(NSInteger)component {
-    NSArray *values = ( pickerView == Picker ? array : array2 );
+    NSArray *values = ( pickerView1 == Picker ? array : array2 );
     if (component == 1)
         return [values count];
-    return [Object count];
+    else {
+        return [Object count];
+    }
+    
 }
 
 #pragma mark Picker Delegate Methods
@@ -312,14 +334,28 @@ numberOfRowsInComponent:(NSInteger)component {
              titleForRow:(NSInteger)row
             forComponent:(NSInteger)component {
     NSArray *values = ( pickerView == Picker ? array : array2  );
+    
+    pickerView1 = pickerView;
+    
     if (component ==1)
-        return [values objectAtIndex: row];
-    return [Object objectAtIndex:row];
+        return [values objectAtIndex:row];
+    else {
+        return [Object objectAtIndex:row];
+    }
+    
+
+    
 }
 
 
 - (IBAction)Cancel:(id)sender {
-    image.image = [UIImage imageNamed:@"rhodes-temp.png"];
+    imageToDisplay.image = originalImage;
+    UIGraphicsBeginImageContext(imageToDisplay.frame.size); 
+    [imageToDisplay.image drawInRect:CGRectMake(0, 0, imageToDisplay.frame.size.width, imageToDisplay.frame.size.height)];
+    
+    imageToDisplay.image = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
     Slider.hidden = YES;
     Picker.hidden = YES;
     Button.hidden = YES;
@@ -330,28 +366,42 @@ numberOfRowsInComponent:(NSInteger)component {
     confidenceLabel.hidden = YES;
     greyBack.hidden = YES;
     segmentControl.hidden = NO;
-    image.hidden = NO;
+    imageToDisplay.hidden = NO;
     interface = @"Main";
     
 }
 
 -(void)DataExchangeConnection {
     int clientSocket;
-    int error = 0;
 	void *buffer = malloc(1000000);
-	int serverSocket = CreateTCPServerSocket(10001);
+    void *msgbuffer = NULL;
+    int bufoffset = 0;
+    int msgLength = -1;
+	int serverSocket = CreateTCPServerSocket(10002);
 	if (serverSocket < 0) {
-		printf("Server Creation\n");
+		printf("Socket creation failed\n");
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle:@"TCP connection failed."
+                              message:nil 
+                              delegate:self
+                              cancelButtonTitle:@"Okay"
+                              otherButtonTitles:nil];
+        [alert show];
+
+        return;
 	}
+    
 	bool isRunning = true;
-	while (isRunning) {
+    int errors = 0;
+	while (isRunning && errors < 10) {
 		printf("Waiting for new client.\n");
 		clientSocket = AcceptTCPConnection(serverSocket);
 		if (clientSocket < 0) {
-			printf("Client accept");
+			printf("Client failed\n");
+            errors++;
 		}
 		while (isRunning && clientSocket >= 0) {
-			printf("Waiting for message.\n");
+			//printf("Waiting for message.\n");
 			int bytesReceived = recv(clientSocket, buffer, 1000000, 0);
 			if (bytesReceived <= 0) {
 				if (bytesReceived == 0) {
@@ -362,23 +412,74 @@ numberOfRowsInComponent:(NSInteger)component {
 				close(clientSocket);
 				clientSocket = -1;
 			} else {
-				printf("Data receive complete. Bytes=%i\n", bytesReceived);
-                int msgLength = ((uint8_t*)buffer)[0];
-                msgLength <<= 8;
-                msgLength += ((uint8_t*)buffer)[1];
-                msgLength <<= 8;
-                msgLength += ((uint8_t*)buffer)[2];
-                msgLength <<= 8;
-                msgLength += ((uint8_t*)buffer)[3];
-                msgLength <<= 8;
-                msgLength = ntohl(msgLength);
+                //printf("Data receive complete. Bytes=%i\n", bytesReceived);
+                int bytesLeft = 0;
                 
-                void *msgData = malloc(msgLength);
-                memcpy(msgData, buffer, msgLength);
-				msg = [SmartPhoneDataMessage parseFromData:[NSData dataWithBytes:buffer length:bytesReceived]];
-                free(msgData);
-                printf("ID: %i, Res: %ix%i\n", msg.id, msg.width, msg.height);
-				
+                if (msgLength == -1){
+                    msgLength = ((uint8_t*)buffer)[0];
+                    msgLength <<= 8;
+                    msgLength += ((uint8_t*)buffer)[1];
+                    msgLength <<= 8;
+                    msgLength += ((uint8_t*)buffer)[2];
+                    msgLength <<= 8;
+                    msgLength += ((uint8_t*)buffer)[3];
+                    //msgLength = ntohl(msgLength);
+                    
+                    msgbuffer = malloc(msgLength);
+                    if (bytesReceived > 4){
+                        void *datastart = buffer + 4;
+                        memcpy(msgbuffer, datastart, bytesReceived-4);
+                        bufoffset = bytesReceived - 4;
+                    }
+                }
+                
+                else {
+                    void *datastart = msgbuffer +bufoffset;
+                    int bytestowrite = MIN(bufoffset + bytesReceived, msgLength) - bufoffset;
+                    memcpy(datastart, buffer, bytestowrite);
+                    bufoffset = bufoffset + bytestowrite;
+                    bytesLeft = bytesReceived - bytestowrite;
+                }
+                //void *msgData = malloc(msgLength);
+                //memcpy(msgData, buffer, bytesReceived);
+                
+				if (bufoffset == msgLength){
+                    msg = [SmartPhoneDataMessage parseFromData:[NSData dataWithBytes:msgbuffer length:msgLength]];
+                    free(msgbuffer);
+                    printf("ID: %i, Res: %ix%i\n", msg.id, msg.width, msg.height);
+                    
+                    [self ImageConvert];
+                                       
+                    
+                    if (bytesLeft != 0){
+                        int nextMsgOffset = bytesReceived - bytesLeft;
+                        msgLength = ((uint8_t*)buffer)[nextMsgOffset];
+                        msgLength <<= 8;
+                        msgLength += ((uint8_t*)buffer)[nextMsgOffset+1];
+                        msgLength <<= 8;
+                        msgLength += ((uint8_t*)buffer)[nextMsgOffset+2];
+                        msgLength <<= 8;
+                        msgLength += ((uint8_t*)buffer)[nextMsgOffset+3];
+                        //msgLength = ntohl(msgLength);
+                        
+                        bufoffset =0;
+                        msgbuffer = malloc(msgLength);
+                        if (bytesLeft > 4){
+                            void *datastart = buffer + nextMsgOffset + 4;
+                            memcpy(msgbuffer, datastart, bytesLeft-4);
+                            bufoffset = bytesLeft - 4;
+                        }
+                    } else {
+                    
+                        bufoffset =0;
+                        msgLength = -1;
+                        msgbuffer = NULL;
+                    }
+                    
+                }
+                
+                
+               				
 			}
             
 		}
@@ -397,7 +498,47 @@ numberOfRowsInComponent:(NSInteger)component {
 
 }
 
+- (void) ImageConvert{
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    size_t dataLength = [msg data].length;
+    void *dataCopy = malloc(dataLength);
+    memcpy(dataCopy, [msg data].bytes, dataLength);
+    CGContextRef gtx = CGBitmapContextCreate(dataCopy, msg.width, msg.height, 8, msg.width*4, colorSpace, kCGImageAlphaPremultipliedLast);
+    CGImageRef toCGImage = CGBitmapContextCreateImage(gtx);
+    UIImage *imageReceived = [[UIImage alloc]initWithCGImage:toCGImage];
+    CGImageRelease(toCGImage);
+    imgToDisplay = imageReceived;
+    free(dataCopy);
+                                  
+}
 
+
+- (IBAction)refresh:(id)sender {
+    
+    if (imgToDisplay == nil){
+        imageToDisplay.image = originalImage;
+        UIGraphicsBeginImageContext(imageToDisplay.frame.size); 
+        [imageToDisplay.image drawInRect:CGRectMake(0, 0, imageToDisplay.frame.size.width, imageToDisplay.frame.size.height)];
+        
+        imageToDisplay.image = UIGraphicsGetImageFromCurrentImageContext();
+        
+        UIGraphicsEndImageContext();
+
+        
+    }
+    else{    
+    imageToDisplay.image = imgToDisplay;
+    UIGraphicsBeginImageContext(imageToDisplay.frame.size); 
+    [imageToDisplay.image drawInRect:CGRectMake(0, 0, imageToDisplay.frame.size.width, imageToDisplay.frame.size.height)];
+    
+    imageToDisplay.image = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+    }
+
+       
+    
+}
 @end
 
 
