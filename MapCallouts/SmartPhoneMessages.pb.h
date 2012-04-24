@@ -177,14 +177,16 @@
 
 @interface SmartPhoneDataMessage : PBGeneratedMessage {
 @private
-  BOOL hasCenterX_:1;
-  BOOL hasCenterY_:1;
+  BOOL hasLeftX_:1;
+  BOOL hasBottomY_:1;
+  BOOL hasMetersPerPixel_:1;
   BOOL hasId_:1;
   BOOL hasWidth_:1;
   BOOL hasHeight_:1;
   BOOL hasMapData_:1;
-  Float64 centerX;
-  Float64 centerY;
+  Float64 leftX;
+  Float64 bottomY;
+  Float64 metersPerPixel;
   int32_t id;
   int32_t width;
   int32_t height;
@@ -194,14 +196,16 @@
 - (BOOL) hasWidth;
 - (BOOL) hasHeight;
 - (BOOL) hasMapData;
-- (BOOL) hasCenterX;
-- (BOOL) hasCenterY;
+- (BOOL) hasLeftX;
+- (BOOL) hasBottomY;
+- (BOOL) hasMetersPerPixel;
 @property (readonly) int32_t id;
 @property (readonly) int32_t width;
 @property (readonly) int32_t height;
 @property (readonly, retain) NSData* mapData;
-@property (readonly) Float64 centerX;
-@property (readonly) Float64 centerY;
+@property (readonly) Float64 leftX;
+@property (readonly) Float64 bottomY;
+@property (readonly) Float64 metersPerPixel;
 
 + (SmartPhoneDataMessage*) defaultInstance;
 - (SmartPhoneDataMessage*) defaultInstance;
@@ -257,14 +261,19 @@
 - (SmartPhoneDataMessage_Builder*) setMapData:(NSData*) value;
 - (SmartPhoneDataMessage_Builder*) clearMapData;
 
-- (BOOL) hasCenterX;
-- (Float64) centerX;
-- (SmartPhoneDataMessage_Builder*) setCenterX:(Float64) value;
-- (SmartPhoneDataMessage_Builder*) clearCenterX;
+- (BOOL) hasLeftX;
+- (Float64) leftX;
+- (SmartPhoneDataMessage_Builder*) setLeftX:(Float64) value;
+- (SmartPhoneDataMessage_Builder*) clearLeftX;
 
-- (BOOL) hasCenterY;
-- (Float64) centerY;
-- (SmartPhoneDataMessage_Builder*) setCenterY:(Float64) value;
-- (SmartPhoneDataMessage_Builder*) clearCenterY;
+- (BOOL) hasBottomY;
+- (Float64) bottomY;
+- (SmartPhoneDataMessage_Builder*) setBottomY:(Float64) value;
+- (SmartPhoneDataMessage_Builder*) clearBottomY;
+
+- (BOOL) hasMetersPerPixel;
+- (Float64) metersPerPixel;
+- (SmartPhoneDataMessage_Builder*) setMetersPerPixel:(Float64) value;
+- (SmartPhoneDataMessage_Builder*) clearMetersPerPixel;
 @end
 

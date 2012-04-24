@@ -11,14 +11,13 @@
 #import "NodeHeartbeatMessage.pb.h"
 #import "SmartPhoneMessages.pb.h"
 
-@interface SketchView : UIView {
+@interface SketchView : UIView <NSObject> {
     
     NSMutableArray *pointList;
-    int n;
+    int n;  //number of point values in pointList
+    int clientSocket;
     SmartPhoneDataMessage *msg; //message received from broadcasting
-    SmartPhoneNodeMessage *msgToSend; //messsage to be sent
-    SmartPhoneNodeMessage_Point *pointToAdd;
-    
+       
     //data to send!!
     NSString *pointx;
     NSString *pointy;
@@ -36,10 +35,10 @@
     int32_t address;
     NSArray *Object;//object there or not there
     UIPickerView *pickerView1;
-    
+    NSString *buttonNumber;
 
     
-    }
+}
 
 @property (retain, nonatomic) IBOutlet UISegmentedControl *segmentControl;
 - (IBAction)Selected:(id)sender;
@@ -73,8 +72,9 @@
 @property (retain, nonatomic) IBOutlet UIPickerView *Picker2;
 
 @property (retain, nonatomic) IBOutlet UIImageView *imageToDisplay;
-@property (retain, nonatomic) IBOutlet UIButton *freshButton;
-- (IBAction)refresh:(id)sender;
+//@property (retain, nonatomic) IBOutlet UIButton *freshButton;
+@property (retain, nonatomic) IBOutlet UIScrollView *scrollView;
+//- (IBAction)refresh:(id)sender;
 
 
 @end

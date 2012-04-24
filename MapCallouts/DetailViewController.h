@@ -28,6 +28,9 @@
 @property (retain, nonatomic) IBOutlet UIButton *CancelButton;
 @property (retain, nonatomic) IBOutlet UIPickerView *Picker2;
 @property (retain, nonatomic) IBOutlet UIImageView *background;
+@property (retain, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (retain, nonatomic) IBOutlet UISegmentedControl *segmentControl;
+- (IBAction)SegmentValueChanged:(id)sender;
 
 
 -(void) Runloop;

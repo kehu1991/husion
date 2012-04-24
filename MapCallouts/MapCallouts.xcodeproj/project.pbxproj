@@ -21,8 +21,10 @@
 		537DA6BA1108F80B0045D54C /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 537DA6B91108F80B0045D54C /* DetailViewController.m */; };
 		537DA6BE1108F8460045D54C /* DetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 537DA6BC1108F8460045D54C /* DetailViewController.xib */; };
 		B409DCC61537AE850061BB2C /* TCPConnectionMethods.c in Sources */ = {isa = PBXBuildFile; fileRef = B409DCC41537AE850061BB2C /* TCPConnectionMethods.c */; };
+		B41F85C31545F1D10024B567 /* SmartPhoneMessages.pb.m in Sources */ = {isa = PBXBuildFile; fileRef = B41F85C21545F1C50024B567 /* SmartPhoneMessages.pb.m */; };
+		B41F860715463FF60024B567 /* ScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = B41F860615463FF60024B567 /* ScrollView.m */; };
+		B41F860915467BF60024B567 /* Rhodes.png in Resources */ = {isa = PBXBuildFile; fileRef = B41F860815467BF60024B567 /* Rhodes.png */; };
 		B42A720B153624EE006E94A6 /* libProtocolBuffers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B42A720315361E13006E94A6 /* libProtocolBuffers.a */; };
-		B446F2431544F8B2009A610E /* SmartPhoneMessages.pb.m in Sources */ = {isa = PBXBuildFile; fileRef = B446F2421544F3F5009A610E /* SmartPhoneMessages.pb.m */; };
 		B44F3820150EBA730035A084 /* SketchView.m in Sources */ = {isa = PBXBuildFile; fileRef = B44F381F150EBA730035A084 /* SketchView.m */; };
 		B44F382B1516D2440035A084 /* robot.png in Resources */ = {isa = PBXBuildFile; fileRef = B44F382A1516D2440035A084 /* robot.png */; };
 		B44F382E1516D2640035A084 /* RhodesBasement.png in Resources */ = {isa = PBXBuildFile; fileRef = B44F382D1516D2640035A084 /* RhodesBasement.png */; };
@@ -103,10 +105,13 @@
 		537DA6BD1108F8460045D54C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DetailViewController.xib; sourceTree = "<group>"; };
 		B409DCC41537AE850061BB2C /* TCPConnectionMethods.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = TCPConnectionMethods.c; sourceTree = "<group>"; };
 		B409DCC51537AE850061BB2C /* TCPConnectionMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPConnectionMethods.h; sourceTree = "<group>"; };
+		B41F85C11545F1C50024B567 /* SmartPhoneMessages.pb.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SmartPhoneMessages.pb.h; sourceTree = "<group>"; };
+		B41F85C21545F1C50024B567 /* SmartPhoneMessages.pb.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SmartPhoneMessages.pb.m; sourceTree = "<group>"; };
+		B41F860515463FF60024B567 /* ScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrollView.h; sourceTree = "<group>"; };
+		B41F860615463FF60024B567 /* ScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScrollView.m; sourceTree = "<group>"; };
+		B41F860815467BF60024B567 /* Rhodes.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Rhodes.png; sourceTree = "<group>"; };
 		B42A71F815361E13006E94A6 /* ProtocolBuffers.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ProtocolBuffers.xcodeproj; path = ../ProtocolBuffers/ProtocolBuffers.xcodeproj; sourceTree = "<group>"; };
 		B42A720815361E5B006E94A6 /* ProtocolBuffers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProtocolBuffers.h; path = ../ProtocolBuffers/Classes/ProtocolBuffers.h; sourceTree = "<group>"; };
-		B446F2411544F3F5009A610E /* SmartPhoneMessages.pb.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SmartPhoneMessages.pb.h; sourceTree = "<group>"; };
-		B446F2421544F3F5009A610E /* SmartPhoneMessages.pb.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SmartPhoneMessages.pb.m; sourceTree = "<group>"; };
 		B44F381E150EBA730035A084 /* SketchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SketchView.h; sourceTree = "<group>"; };
 		B44F381F150EBA730035A084 /* SketchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SketchView.m; sourceTree = "<group>"; };
 		B44F382A1516D2440035A084 /* robot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = robot.png; sourceTree = "<group>"; };
@@ -219,9 +224,6 @@
 		CB6C7CA311D53FA900AC7FA8 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				B409DCC41537AE850061BB2C /* TCPConnectionMethods.c */,
-				B409DCC51537AE850061BB2C /* TCPConnectionMethods.h */,
-				B42A720815361E5B006E94A6 /* ProtocolBuffers.h */,
 				5321F1850F7AE57A00EC9E3A /* AppDelegate.h */,
 				5321F1840F7AE57A00EC9E3A /* AppDelegate.m */,
 				536EE47810B358610080A190 /* MapViewController.h */,
@@ -234,10 +236,15 @@
 				534BB35110B4A47500C8BE22 /* BridgeAnnotation.m */,
 				B44F381E150EBA730035A084 /* SketchView.h */,
 				B44F381F150EBA730035A084 /* SketchView.m */,
-				B446F2411544F3F5009A610E /* SmartPhoneMessages.pb.h */,
-				B446F2421544F3F5009A610E /* SmartPhoneMessages.pb.m */,
+				B41F85C11545F1C50024B567 /* SmartPhoneMessages.pb.h */,
+				B41F85C21545F1C50024B567 /* SmartPhoneMessages.pb.m */,
 				B4B15E45152F92DA00828DBD /* NodeHeartbeatMessage.pb.h */,
 				B4B15E46152F92DB00828DBD /* NodeHeartbeatMessage.pb.m */,
+				B409DCC41537AE850061BB2C /* TCPConnectionMethods.c */,
+				B409DCC51537AE850061BB2C /* TCPConnectionMethods.h */,
+				B42A720815361E5B006E94A6 /* ProtocolBuffers.h */,
+				B41F860515463FF60024B567 /* ScrollView.h */,
+				B41F860615463FF60024B567 /* ScrollView.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -247,6 +254,7 @@
 			children = (
 				CB6C7CBD11D5400200AC7FA8 /* iTunesArtwork */,
 				B4645EF415328A8900A2A786 /* cancel copy.png */,
+				B41F860815467BF60024B567 /* Rhodes.png */,
 				CB6C7CA611D53FDA00AC7FA8 /* flag.png */,
 				CB6C7CA711D53FDA00AC7FA8 /* GoldenGate.png */,
 				B44F38311516E64C0035A084 /* background.png */,
@@ -373,6 +381,7 @@
 				B4FD88AC1517D2AD00789E90 /* grid.gif in Resources */,
 				B463FE32152CE10C008324AE /* rhodes-temp.png in Resources */,
 				B4645EF515328A8900A2A786 /* cancel copy.png in Resources */,
+				B41F860915467BF60024B567 /* Rhodes.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -383,7 +392,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B446F2431544F8B2009A610E /* SmartPhoneMessages.pb.m in Sources */,
+				B41F85C31545F1D10024B567 /* SmartPhoneMessages.pb.m in Sources */,
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				5321F1870F7AE57A00EC9E3A /* AppDelegate.m in Sources */,
 				533D375B10B329010057E53B /* SFAnnotation.m in Sources */,
@@ -393,6 +402,7 @@
 				B44F3820150EBA730035A084 /* SketchView.m in Sources */,
 				B4B15E47152F92DB00828DBD /* NodeHeartbeatMessage.pb.m in Sources */,
 				B409DCC61537AE850061BB2C /* TCPConnectionMethods.c in Sources */,
+				B41F860715463FF60024B567 /* ScrollView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

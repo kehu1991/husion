@@ -16,6 +16,8 @@
 @implementation DetailViewController
 @synthesize Picker2;
 @synthesize background;
+@synthesize scrollView;
+@synthesize segmentControl;
 @synthesize image;
 @synthesize CancelButton;
 @synthesize Picker;
@@ -46,43 +48,42 @@
     greyBack.hidden = YES;
     CancelButton.hidden = YES;
     Picker2.hidden = YES;
+    
+    [segmentControl setSelectedSegmentIndex:2];
+     
     [Picker2 reloadAllComponents];
     [Picker2 selectRow:1 inComponent:0 animated:NO];
     [Picker2 selectRow:1 inComponent:1 animated:NO];
     [Picker reloadAllComponents];
     [Picker selectRow:1 inComponent:0 animated:NO];
     [Picker selectRow:1 inComponent:1 animated:NO];
-    [self.background setImage: [UIImage imageNamed:@"rhodes-temp.png"]];
-        
+    self.scrollView.delegate=self;
 
     
+    scrollView.contentSize=CGSizeMake(713, 520);
+    scrollView.contentInset=UIEdgeInsetsMake(0,0,0,0);
+    
+    [scrollView addSubview:background];
+    self.scrollView.minimumZoomScale=0.8;
+    self.scrollView.maximumZoomScale=6.0;
+    [self.scrollView setContentOffset:CGPointMake(background.frame.size.width/2 - scrollView.frame.size.width/2, background.frame.size.height/2 - scrollView.frame.size.height/2)];
+
     [NSThread detachNewThreadSelector: @selector(Runloop) toTarget:self
                            withObject:nil];
     
-    //[NSThread detachNewThreadSelector: @selector(DataExchangeConnection) toTarget:self withObject:nil];
-    
-    //[self ImageUpdate];
-
-    
-    
-
-
-    
-    //ScrollView.contentSize=CGSizeMake(1280,960);
-    //[ScrollView addSubview:image];
-    //[image setUserInteractionEnabled:YES];
-    //ScrollView.scrollEnabled = NO;
-    
-    //ScrollView.contentSize=CGSizeMake(1280,960);
-    
-
-        
-    //SketchRecognizer *recog = [[SketchRecognizer alloc] initWithTarget:self action:@selector(doSketch:)];
-    //[self.view addGestureRecognizer:recog];
+      
 }
+
+- (UIView *)viewForZoomingInScrollView:(UIScrollView *)ScrollView
+{
+    return ScrollView.scrollEnabled == YES? self.background : nil;
+}
+
 
 - (void)viewDidUnload
 {
+    [self setSegmentControl:nil];
+    [self setScrollView:nil];
     [self setBackground:nil];
     [self setPicker2:nil];
     [self setCancelButton:nil];
@@ -113,8 +114,33 @@
     [CancelButton release];
     [Picker2 release];
     [background release];
+    [scrollView release];
+    [segmentControl release];
     [super dealloc];
 }
+
+- (IBAction)SegmentValueChanged:(id)sender {
+    if ([sender selectedSegmentIndex]==0){
+
+        [scrollView setZoomScale:1 animated:YES];
+        scrollView.scrollEnabled = NO;
+
+    }
+    else {
+        
+        if ([sender selectedSegmentIndex] == 1) {
+
+            [scrollView setZoomScale:1 animated:YES];
+            scrollView.scrollEnabled = NO;
+
+        }
+        else {
+            scrollView.scrollEnabled = YES;
+        }
+    }
+}
+
+
 
 - (void) Runloop {
     address = 0;

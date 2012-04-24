@@ -677,8 +677,9 @@ static SmartPhoneNodeMessage_Point* defaultSmartPhoneNodeMessage_PointInstance =
 @property int32_t width;
 @property int32_t height;
 @property (retain) NSData* mapData;
-@property Float64 centerX;
-@property Float64 centerY;
+@property Float64 leftX;
+@property Float64 bottomY;
+@property Float64 metersPerPixel;
 @end
 
 @implementation SmartPhoneDataMessage
@@ -711,20 +712,27 @@ static SmartPhoneNodeMessage_Point* defaultSmartPhoneNodeMessage_PointInstance =
   hasMapData_ = !!value;
 }
 @synthesize mapData;
-- (BOOL) hasCenterX {
-  return !!hasCenterX_;
+- (BOOL) hasLeftX {
+  return !!hasLeftX_;
 }
-- (void) setHasCenterX:(BOOL) value {
-  hasCenterX_ = !!value;
+- (void) setHasLeftX:(BOOL) value {
+  hasLeftX_ = !!value;
 }
-@synthesize centerX;
-- (BOOL) hasCenterY {
-  return !!hasCenterY_;
+@synthesize leftX;
+- (BOOL) hasBottomY {
+  return !!hasBottomY_;
 }
-- (void) setHasCenterY:(BOOL) value {
-  hasCenterY_ = !!value;
+- (void) setHasBottomY:(BOOL) value {
+  hasBottomY_ = !!value;
 }
-@synthesize centerY;
+@synthesize bottomY;
+- (BOOL) hasMetersPerPixel {
+  return !!hasMetersPerPixel_;
+}
+- (void) setHasMetersPerPixel:(BOOL) value {
+  hasMetersPerPixel_ = !!value;
+}
+@synthesize metersPerPixel;
 - (void) dealloc {
   self.mapData = nil;
   [super dealloc];
@@ -735,8 +743,9 @@ static SmartPhoneNodeMessage_Point* defaultSmartPhoneNodeMessage_PointInstance =
     self.width = 0;
     self.height = 0;
     self.mapData = [NSData data];
-    self.centerX = 0;
-    self.centerY = 0;
+    self.leftX = 0;
+    self.bottomY = 0;
+    self.metersPerPixel = 0;
   }
   return self;
 }
@@ -771,11 +780,14 @@ static SmartPhoneDataMessage* defaultSmartPhoneDataMessageInstance = nil;
   if (self.hasMapData) {
     [output writeData:18 value:self.mapData];
   }
-  if (self.hasCenterX) {
-    [output writeDouble:19 value:self.centerX];
+  if (self.hasLeftX) {
+    [output writeDouble:19 value:self.leftX];
   }
-  if (self.hasCenterY) {
-    [output writeDouble:20 value:self.centerY];
+  if (self.hasBottomY) {
+    [output writeDouble:20 value:self.bottomY];
+  }
+  if (self.hasMetersPerPixel) {
+    [output writeDouble:21 value:self.metersPerPixel];
   }
   [self.unknownFields writeToCodedOutputStream:output];
 }
@@ -798,11 +810,14 @@ static SmartPhoneDataMessage* defaultSmartPhoneDataMessageInstance = nil;
   if (self.hasMapData) {
     size += computeDataSize(18, self.mapData);
   }
-  if (self.hasCenterX) {
-    size += computeDoubleSize(19, self.centerX);
+  if (self.hasLeftX) {
+    size += computeDoubleSize(19, self.leftX);
   }
-  if (self.hasCenterY) {
-    size += computeDoubleSize(20, self.centerY);
+  if (self.hasBottomY) {
+    size += computeDoubleSize(20, self.bottomY);
+  }
+  if (self.hasMetersPerPixel) {
+    size += computeDoubleSize(21, self.metersPerPixel);
   }
   size += self.unknownFields.serializedSize;
   memoizedSerializedSize = size;
@@ -891,11 +906,14 @@ static SmartPhoneDataMessage* defaultSmartPhoneDataMessageInstance = nil;
   if (other.hasMapData) {
     [self setMapData:other.mapData];
   }
-  if (other.hasCenterX) {
-    [self setCenterX:other.centerX];
+  if (other.hasLeftX) {
+    [self setLeftX:other.leftX];
   }
-  if (other.hasCenterY) {
-    [self setCenterY:other.centerY];
+  if (other.hasBottomY) {
+    [self setBottomY:other.bottomY];
+  }
+  if (other.hasMetersPerPixel) {
+    [self setMetersPerPixel:other.metersPerPixel];
   }
   [self mergeUnknownFields:other.unknownFields];
   return self;
@@ -935,11 +953,15 @@ static SmartPhoneDataMessage* defaultSmartPhoneDataMessageInstance = nil;
         break;
       }
       case 153: {
-        [self setCenterX:[input readDouble]];
+        [self setLeftX:[input readDouble]];
         break;
       }
       case 161: {
-        [self setCenterY:[input readDouble]];
+        [self setBottomY:[input readDouble]];
+        break;
+      }
+      case 169: {
+        [self setMetersPerPixel:[input readDouble]];
         break;
       }
     }
@@ -1009,36 +1031,52 @@ static SmartPhoneDataMessage* defaultSmartPhoneDataMessageInstance = nil;
   result.mapData = [NSData data];
   return self;
 }
-- (BOOL) hasCenterX {
-  return result.hasCenterX;
+- (BOOL) hasLeftX {
+  return result.hasLeftX;
 }
-- (Float64) centerX {
-  return result.centerX;
+- (Float64) leftX {
+  return result.leftX;
 }
-- (SmartPhoneDataMessage_Builder*) setCenterX:(Float64) value {
-  result.hasCenterX = YES;
-  result.centerX = value;
+- (SmartPhoneDataMessage_Builder*) setLeftX:(Float64) value {
+  result.hasLeftX = YES;
+  result.leftX = value;
   return self;
 }
-- (SmartPhoneDataMessage_Builder*) clearCenterX {
-  result.hasCenterX = NO;
-  result.centerX = 0;
+- (SmartPhoneDataMessage_Builder*) clearLeftX {
+  result.hasLeftX = NO;
+  result.leftX = 0;
   return self;
 }
-- (BOOL) hasCenterY {
-  return result.hasCenterY;
+- (BOOL) hasBottomY {
+  return result.hasBottomY;
 }
-- (Float64) centerY {
-  return result.centerY;
+- (Float64) bottomY {
+  return result.bottomY;
 }
-- (SmartPhoneDataMessage_Builder*) setCenterY:(Float64) value {
-  result.hasCenterY = YES;
-  result.centerY = value;
+- (SmartPhoneDataMessage_Builder*) setBottomY:(Float64) value {
+  result.hasBottomY = YES;
+  result.bottomY = value;
   return self;
 }
-- (SmartPhoneDataMessage_Builder*) clearCenterY {
-  result.hasCenterY = NO;
-  result.centerY = 0;
+- (SmartPhoneDataMessage_Builder*) clearBottomY {
+  result.hasBottomY = NO;
+  result.bottomY = 0;
+  return self;
+}
+- (BOOL) hasMetersPerPixel {
+  return result.hasMetersPerPixel;
+}
+- (Float64) metersPerPixel {
+  return result.metersPerPixel;
+}
+- (SmartPhoneDataMessage_Builder*) setMetersPerPixel:(Float64) value {
+  result.hasMetersPerPixel = YES;
+  result.metersPerPixel = value;
+  return self;
+}
+- (SmartPhoneDataMessage_Builder*) clearMetersPerPixel {
+  result.hasMetersPerPixel = NO;
+  result.metersPerPixel = 0;
   return self;
 }
 @end
