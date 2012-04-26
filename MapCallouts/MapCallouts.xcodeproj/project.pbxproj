@@ -30,7 +30,6 @@
 		B44F382E1516D2640035A084 /* RhodesBasement.png in Resources */ = {isa = PBXBuildFile; fileRef = B44F382D1516D2640035A084 /* RhodesBasement.png */; };
 		B44F38301516D2920035A084 /* default.png in Resources */ = {isa = PBXBuildFile; fileRef = B44F382F1516D2920035A084 /* default.png */; };
 		B44F38321516E64C0035A084 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = B44F38311516E64C0035A084 /* background.png */; };
-		B463FE32152CE10C008324AE /* rhodes-temp.png in Resources */ = {isa = PBXBuildFile; fileRef = B463FE31152CE10C008324AE /* rhodes-temp.png */; };
 		B4645EF515328A8900A2A786 /* cancel copy.png in Resources */ = {isa = PBXBuildFile; fileRef = B4645EF415328A8900A2A786 /* cancel copy.png */; };
 		B4B15E47152F92DB00828DBD /* NodeHeartbeatMessage.pb.m in Sources */ = {isa = PBXBuildFile; fileRef = B4B15E46152F92DB00828DBD /* NodeHeartbeatMessage.pb.m */; };
 		B4E1498B152BBC23002C618C /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4E1498A152BBC23002C618C /* CFNetwork.framework */; };
@@ -118,7 +117,6 @@
 		B44F382D1516D2640035A084 /* RhodesBasement.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RhodesBasement.png; sourceTree = "<group>"; };
 		B44F382F1516D2920035A084 /* default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default.png; sourceTree = "<group>"; };
 		B44F38311516E64C0035A084 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
-		B463FE31152CE10C008324AE /* rhodes-temp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "rhodes-temp.png"; path = "../../../Desktop/rhodes-temp.png"; sourceTree = "<group>"; };
 		B4645EF415328A8900A2A786 /* cancel copy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cancel copy.png"; sourceTree = "<group>"; };
 		B4B15E45152F92DA00828DBD /* NodeHeartbeatMessage.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NodeHeartbeatMessage.pb.h; sourceTree = "<group>"; };
 		B4B15E46152F92DB00828DBD /* NodeHeartbeatMessage.pb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NodeHeartbeatMessage.pb.m; sourceTree = "<group>"; };
@@ -267,7 +265,6 @@
 				CB6C7CAA11D53FDA00AC7FA8 /* Icon-Small.png */,
 				CB6C7CAB11D53FDA00AC7FA8 /* Icon-Small@2x.png */,
 				CB6C7CAC11D53FDA00AC7FA8 /* Icon.png */,
-				B463FE31152CE10C008324AE /* rhodes-temp.png */,
 				CB6C7CAD11D53FDA00AC7FA8 /* Icon@2x.png */,
 				CB6C7CAF11D53FDA00AC7FA8 /* Location.png */,
 				CB6C7CB011D53FDA00AC7FA8 /* SFIcon.png */,
@@ -379,7 +376,6 @@
 				B44F38301516D2920035A084 /* default.png in Resources */,
 				B44F38321516E64C0035A084 /* background.png in Resources */,
 				B4FD88AC1517D2AD00789E90 /* grid.gif in Resources */,
-				B463FE32152CE10C008324AE /* rhodes-temp.png in Resources */,
 				B4645EF515328A8900A2A786 /* cancel copy.png in Resources */,
 				B41F860915467BF60024B567 /* Rhodes.png in Resources */,
 			);
@@ -490,16 +486,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Chong Liu (DT897273Y7)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Chong Liu (DT897273Y7)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Ke Hu (G5BW8Z93CP)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ke Hu (G5BW8Z93CP)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				ONLY_ACTIVE_ARCH = YES;
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
-				PROVISIONING_PROFILE = "5EE352F6-8AA5-4EF1-BBC7-7E5AB7BA4447";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5EE352F6-8AA5-4EF1-BBC7-7E5AB7BA4447";
+				PROVISIONING_PROFILE = "5C6A626B-632B-4F82-A9CA-8FB6F688AC75";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5C6A626B-632B-4F82-A9CA-8FB6F688AC75";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -508,16 +504,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Chong Liu (DT897273Y7)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Chong Liu (DT897273Y7)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Ke Hu (G5BW8Z93CP)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ke Hu (G5BW8Z93CP)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				ONLY_ACTIVE_ARCH = YES;
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
-				PROVISIONING_PROFILE = "5EE352F6-8AA5-4EF1-BBC7-7E5AB7BA4447";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5EE352F6-8AA5-4EF1-BBC7-7E5AB7BA4447";
+				PROVISIONING_PROFILE = "5C6A626B-632B-4F82-A9CA-8FB6F688AC75";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5C6A626B-632B-4F82-A9CA-8FB6F688AC75";
 				SDKROOT = iphoneos;
 			};
 			name = Release;

@@ -37,6 +37,17 @@ enum
     [self.mapView setRegion:newRegion animated:YES];
 }
 
+- (void)gotoEngQuad
+{
+    MKCoordinateRegion newRegion;
+    newRegion.center.latitude = 42.444547;
+    newRegion.center.longitude = -76.48341;
+    newRegion.span.latitudeDelta = 0.005872;
+    newRegion.span.longitudeDelta = 0.004863;
+    [self.mapView setRegion:newRegion animated:YES];
+
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
     // bring back the toolbar
@@ -81,7 +92,7 @@ enum
     [mapView release];
     [detailViewController release];
     [mapAnnotations release];
-    
+        
     [super dealloc];
 }
 
@@ -91,7 +102,7 @@ enum
 
 - (IBAction)cityAction:(id)sender
 {
-    [self gotoLocation];//•• avoid this by checking its region from ours??
+    [self gotoEngQuad];//•• avoid this by checking its region from ours??
     
     [self.mapView removeAnnotations:self.mapView.annotations];  // remove any annotations that exist
     
@@ -123,7 +134,19 @@ enum
     [self.navigationController setToolbarHidden:YES animated:NO];
     
     [self.navigationController pushViewController:self.detailViewController animated:YES];
+    [self.detailViewController.background setImage:[UIImage imageNamed:@"Rhodes.png"]];
 }
+
+- (void)showEngView:(id)sender
+{
+    // the detail view does not want a toolbar so hide it
+    [self.navigationController setToolbarHidden:YES animated:NO];
+    
+    [self.navigationController pushViewController:self.detailViewController animated:YES];
+    [self.detailViewController.background setImage:[UIImage imageNamed:@"GoldenGate.png"]];
+
+}
+
 
 - (MKAnnotationView *)mapView:(MKMapView *)theMapView viewForAnnotation:(id <MKAnnotation>)annotation
 {
@@ -167,14 +190,14 @@ enum
         }
         return pinView;
     }
-    /**else if ([annotation isKindOfClass:[SFAnnotation class]])   // for City of San Francisco
+    else if ([annotation isKindOfClass:[SFAnnotation class]])   // for City of San Francisco
     {
         static NSString* SFAnnotationIdentifier = @"SFAnnotationIdentifier";
         MKPinAnnotationView* pinView =
             (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:SFAnnotationIdentifier];
         if (!pinView)
         {
-            MKAnnotationView *annotationView = [[[MKAnnotationView alloc] initWithAnnotation:annotation
+            /**MKAnnotationView *annotationView = [[[MKAnnotationView alloc] initWithAnnotation:annotation
                                                                              reuseIdentifier:SFAnnotationIdentifier] autorelease];
             annotationView.canShowCallout = YES;
            
@@ -205,14 +228,31 @@ enum
             annotationView.leftCalloutAccessoryView = sfIconView;
             [sfIconView release];
             
-            return annotationView;
+            return annotationView;*/
+            MKPinAnnotationView* customPinView = [[[MKPinAnnotationView alloc]
+                                                   initWithAnnotation:annotation reuseIdentifier:SFAnnotationIdentifier] autorelease];
+            customPinView.pinColor = MKPinAnnotationColorPurple;
+            customPinView.animatesDrop = YES;
+            customPinView.canShowCallout = YES;
+            
+            UIButton* rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+            [rightButton addTarget:self
+                            action:@selector(showEngView:)
+                  forControlEvents:UIControlEventTouchUpInside];
+            customPinView.rightCalloutAccessoryView = rightButton;
+            
+            return customPinView;
+
+            
         }
+            
+            
         else
         {
             pinView.annotation = annotation;
         }
         return pinView;
-    }*/
+    }
     
     return nil;
 }

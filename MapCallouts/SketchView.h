@@ -36,6 +36,11 @@
     NSArray *Object;//object there or not there
     UIPickerView *pickerView1;
     NSString *buttonNumber;
+    
+    
+    float originalx;
+    float originaly;
+    
 
     
 }
@@ -75,6 +80,8 @@
 //@property (retain, nonatomic) IBOutlet UIButton *freshButton;
 @property (retain, nonatomic) IBOutlet UIScrollView *scrollView;
 //- (IBAction)refresh:(id)sender;
+@property (retain, nonatomic) IBOutlet UILabel *refreshRemindLabel;
+@property (retain, nonatomic) IBOutlet UILabel *mapUpdatedLabel;
 
 
 @end

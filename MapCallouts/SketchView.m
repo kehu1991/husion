@@ -21,6 +21,9 @@ static NSString *interface = @"Main";//Interface label. Main,
 
 /**SketchView is the interface where an interior map shown with point and sketch implementation*/
 @implementation SketchView
+@synthesize refreshRemindLabel;
+@synthesize mapUpdatedLabel;
+
 
 @synthesize Picker; //picker for doing point
 @synthesize Picker2;//picker for doing Sketch
@@ -102,6 +105,8 @@ static NSString *interface = @"Main";//Interface label. Main,
     //[backgroundimage release];
     //[freshButton release];
     [scrollView release];
+    [refreshRemindLabel release];
+    [mapUpdatedLabel release];
     [super dealloc];
 }
 
@@ -113,32 +118,51 @@ static NSString *interface = @"Main";//Interface label. Main,
     if ([sender selectedSegmentIndex]==0){
         buttonNumber = @"1";
         //self.pickerData = array;
+        //[self refreshMap];
         
         
         if (imgToDisplay == nil){
             imageToDisplay.image = originalImage;
             UIGraphicsBeginImageContext(imageToDisplay.frame.size); 
             [imageToDisplay.image drawInRect:CGRectMake(0, 0, imageToDisplay.frame.size.width, imageToDisplay.frame.size.height)];
-            
             imageToDisplay.image = UIGraphicsGetImageFromCurrentImageContext();
-            
             UIGraphicsEndImageContext();
-            
             
         }
         else{    
-            imageToDisplay.image = imgToDisplay;
+            [imageToDisplay setImage:imgToDisplay];
+            //imageToDisplay.image = [UIImage imageNamed:@"GoldenGate.png"];
             originalImage = [imgToDisplay copy];
             UIGraphicsBeginImageContext(imageToDisplay.frame.size); 
             [imageToDisplay.image drawInRect:CGRectMake(0, 0, imageToDisplay.frame.size.width, imageToDisplay.frame.size.height)];
             
-            imageToDisplay.image = UIGraphicsGetImageFromCurrentImageContext();
+            [imageToDisplay setImage: UIGraphicsGetImageFromCurrentImageContext()];
             
             UIGraphicsEndImageContext();
-                     
-        
+            
+            
+        }
+
+        if (clientSocket == -1){
+            refreshRemindLabel.hidden = NO;
+            
+            [self performSelector:@selector(MoveRefreshLabelAway) withObject:nil afterDelay:1.00];
+            [self performSelector:@selector(moveRefreshLabelBack) withObject:nil afterDelay:3.00];    
+            
         }
         
+        else {
+            mapUpdatedLabel.hidden = NO;
+            
+            [self performSelector:@selector(MoveMapUpdatedLabelAway) withObject:nil afterDelay:1.00];
+            [self performSelector:@selector(moveMapUpdatedlBack) withObject:nil afterDelay:3.00];                
+            printf("Map updated.\n");
+
+        }
+        
+        
+        
+                
     }
     else {
         
@@ -202,15 +226,35 @@ static NSString *interface = @"Main";//Interface label. Main,
         
         int result = send(clientSocket, (void*)lengthBytes, 4, 0);
         result = send(clientSocket, [msgData bytes], msgData.length, 0);
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle:@"Data was sent!"
+                              message:nil 
+                              delegate:self
+                              cancelButtonTitle:@"Cool"
+                              otherButtonTitles:nil];
+        [alert show];
+
         
     } else {
         
+        refreshRemindLabel.hidden = NO;
+        
+        [self performSelector:@selector(MoveRefreshLabelAway) withObject:nil afterDelay:1.00];
+        [self performSelector:@selector(moveRefreshLabelBack) withObject:nil afterDelay:3.00];                
         printf("Client socket does not exist.\n");
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle:@"Data sending failed. Please check wifi connection and try again."
+                              message:nil 
+                              delegate:self
+                              cancelButtonTitle:@"Okay"
+                              otherButtonTitles:nil];
+        [alert show];
+
     }
     
     
         
-    imageToDisplay.image = originalImage;
+    imageToDisplay.image = [originalImage copy];
     UIGraphicsBeginImageContext(imageToDisplay.frame.size); 
     [imageToDisplay.image drawInRect:CGRectMake(0, 0, imageToDisplay.frame.size.width, imageToDisplay.frame.size.height)];
     
@@ -246,6 +290,55 @@ static NSString *interface = @"Main";//Interface label. Main,
     
     
 }
+
+
+- (void) MoveRefreshLabelAway {
+    CGRect frame = refreshRemindLabel.frame;
+    originalx = refreshRemindLabel.frame.origin.x;
+    originaly = refreshRemindLabel.frame.origin.y;
+    frame.origin.x = 0;
+    frame.origin.y = -150;
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration: 3.00];
+    refreshRemindLabel.frame = frame;
+    [UIView commitAnimations];
+
+    
+}
+
+- (void) moveRefreshLabelBack{
+    CGRect frame = refreshRemindLabel.frame;
+    refreshRemindLabel.hidden = YES;
+    frame.origin.x = originalx;
+    frame.origin.y = originaly;
+    refreshRemindLabel.frame = frame;
+    
+}
+
+- (void) MoveMapUpdatedLabelAway {
+    CGRect frame = mapUpdatedLabel.frame;
+    originalx = mapUpdatedLabel.frame.origin.x;
+    originaly = mapUpdatedLabel.frame.origin.y;
+    frame.origin.x = 0;
+    frame.origin.y = -150;
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration: 3.00];
+    mapUpdatedLabel.frame = frame;
+    [UIView commitAnimations];
+    
+    
+}
+
+- (void) moveMapUpdatedlBack{
+    CGRect frame = mapUpdatedLabel.frame;
+    mapUpdatedLabel.hidden = YES;
+    frame.origin.x = originalx;
+    frame.origin.y = originaly;
+    mapUpdatedLabel.frame = frame;
+    
+}
+
+
 
 
 - (IBAction)SliderChanged:(id)sender {
@@ -285,7 +378,7 @@ static NSString *interface = @"Main";//Interface label. Main,
             CGContextSetRGBStrokeColor(ctx, 1.0, 0.0, 0.0, 1.0);
             CGContextBeginPath(ctx);
             CGContextMoveToPoint(ctx, point.x, point.y);
-            CGContextAddLineToPoint(ctx, point.x+1, point.y+1);
+            CGContextAddLineToPoint(ctx, point.x-0.1, point.y-0.1);
             CGContextStrokePath(ctx);
             imageToDisplay.image = UIGraphicsGetImageFromCurrentImageContext();
             
@@ -486,7 +579,7 @@ numberOfRowsInComponent:(NSInteger)component {
 	if (serverSocket < 0) {
 		printf("Socket creation failed\n");
         UIAlertView *alert = [[UIAlertView alloc]
-                              initWithTitle:@"TCP connection failed."
+                              initWithTitle:@"Server Socket Creation Failed. Please restart the app."
                               message:nil 
                               delegate:self
                               cancelButtonTitle:@"Okay"
@@ -604,16 +697,26 @@ numberOfRowsInComponent:(NSInteger)component {
 }
 
 - (void) ImageConvert{
-    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-    size_t dataLength = [msg data].length;
+    /**CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    
+    size_t dataLength = [msg mapData].length;
+    
     void *dataCopy = malloc(dataLength);
-    memcpy(dataCopy, [msg data].bytes, dataLength);
+    memcpy(dataCopy,[msg mapData].bytes, dataLength);
     CGContextRef gtx = CGBitmapContextCreate(dataCopy, msg.width, msg.height, 8, msg.width*4, colorSpace, kCGImageAlphaPremultipliedLast);
     CGImageRef toCGImage = CGBitmapContextCreateImage(gtx);
-    UIImage *imageReceived = [[UIImage alloc]initWithCGImage:toCGImage];
-    CGImageRelease(toCGImage);
-    imgToDisplay = imageReceived;
+    imgToDisplay = [[UIImage alloc]initWithCGImage:toCGImage];
     free(dataCopy);
+    CGImageRelease(toCGImage);
+    CGColorSpaceRelease(colorSpace);*/
+    
+    /**imgToDisplay= [UIImage alloc];
+    NSData *copy = [NSData dataWithData:msg.mapData];
+    [imgToDisplay initWithData:copy];
+     */
+    UIImage *orgImg = [[UIImage alloc] initWithData:msg.mapData];
+    NSData * convertedData = UIImagePNGRepresentation(orgImg);
+    imgToDisplay = [UIImage imageWithData: convertedData];
                                   
 }
 
@@ -645,6 +748,35 @@ numberOfRowsInComponent:(NSInteger)component {
        
     
 }*/
+
+/**- (void) refreshMap{
+    if (imgToDisplay == nil){
+        imageToDisplay.image = originalImage;
+        UIGraphicsBeginImageContext(imageToDisplay.frame.size); 
+        [imageToDisplay.image drawInRect:CGRectMake(0, 0, imageToDisplay.frame.size.width, imageToDisplay.frame.size.height)];
+        
+        imageToDisplay.image = UIGraphicsGetImageFromCurrentImageContext();
+        
+        UIGraphicsEndImageContext();
+        
+    }
+    else{    
+        imageToDisplay.image = imgToDisplay;
+        originalImage = [imgToDisplay copy];
+        UIGraphicsBeginImageContext(imageToDisplay.frame.size); 
+        [imageToDisplay.image drawInRect:CGRectMake(0, 0, imageToDisplay.frame.size.width, imageToDisplay.frame.size.height)];
+        
+        imageToDisplay.image = UIGraphicsGetImageFromCurrentImageContext();
+        
+        UIGraphicsEndImageContext();
+        
+        
+    }
+
+
+}
+ */
+
 
 @end
 

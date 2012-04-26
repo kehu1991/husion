@@ -31,6 +31,8 @@
 @property (retain, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (retain, nonatomic) IBOutlet UISegmentedControl *segmentControl;
 - (IBAction)SegmentValueChanged:(id)sender;
+@property (retain, nonatomic) IBOutlet UILabel *RefreshRemindLabel;
+@property (retain, nonatomic) IBOutlet UILabel *MapUpdatedLabel;
 
 
 -(void) Runloop;

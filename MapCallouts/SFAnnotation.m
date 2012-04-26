@@ -3,34 +3,34 @@
 
 @implementation SFAnnotation 
 
-@synthesize image;
+/**@synthesize image;
 @synthesize latitude;
 @synthesize longitude;
 
-
+*/
 - (CLLocationCoordinate2D)coordinate;
 {
     CLLocationCoordinate2D theCoordinate;
-    theCoordinate.latitude = 37.786996;
-    theCoordinate.longitude = -122.419281;
+    theCoordinate.latitude = 42.444547;
+    theCoordinate.longitude = -76.48341;
     return theCoordinate; 
 }
 
 - (void)dealloc
 {
-    [image release];
+    //[image release];
     [super dealloc];
 }
 
 - (NSString *)title
 {
-    return @"San Francisco";
+    return @"Engineering Quad";
 }
 
 // optional
 - (NSString *)subtitle
 {
-    return @"Founded: June 29, 1776";
+    return @"Cornell University";
 }
 
 @end

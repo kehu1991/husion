@@ -14,6 +14,8 @@
 
 
 @implementation DetailViewController
+@synthesize RefreshRemindLabel;
+@synthesize MapUpdatedLabel;
 @synthesize Picker2;
 @synthesize background;
 @synthesize scrollView;
@@ -48,6 +50,8 @@
     greyBack.hidden = YES;
     CancelButton.hidden = YES;
     Picker2.hidden = YES;
+    RefreshRemindLabel.hidden = YES;
+    MapUpdatedLabel.hidden = YES;
     
     [segmentControl setSelectedSegmentIndex:2];
      
@@ -82,6 +86,8 @@
 
 - (void)viewDidUnload
 {
+    [self setMapUpdatedLabel:nil];
+    [self setRefreshRemindLabel:nil];
     [self setSegmentControl:nil];
     [self setScrollView:nil];
     [self setBackground:nil];
@@ -116,6 +122,8 @@
     [background release];
     [scrollView release];
     [segmentControl release];
+    [RefreshRemindLabel release];
+    [MapUpdatedLabel release];
     [super dealloc];
 }
 
