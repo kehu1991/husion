@@ -125,7 +125,10 @@ static NSString *interface = @"Main";//Interface label. Main,
         
         if (imgToDisplay == nil){
             imageToDisplay.image = originalImage;
+
             CGRect imgFrame = CGRectMake(0, 0, imageToDisplay.image.size.width, imageToDisplay.image.size.height);
+            imageToDisplay.frame = imgFrame;
+            scrollView.contentSize = imgFrame.size;
             UIGraphicsBeginImageContext(imgFrame.size);
             [imageToDisplay.image drawInRect:imgFrame];
 
@@ -141,6 +144,8 @@ static NSString *interface = @"Main";//Interface label. Main,
             //imageToDisplay.image = [UIImage imageNamed:@"GoldenGate.png"];
             originalImage = [imgToDisplay copy];
             CGRect imgFrame = CGRectMake(0, 0, imageToDisplay.image.size.width, imageToDisplay.image.size.height);
+            imageToDisplay.frame = imgFrame;
+            scrollView.contentSize = imgFrame.size;
             UIGraphicsBeginImageContext(imgFrame.size);
             //CGContextRef ctx = UIGraphicsGetCurrentContext(); 
             [imageToDisplay.image drawInRect:imgFrame];
@@ -377,6 +382,7 @@ static NSString *interface = @"Main";//Interface label. Main,
     if (interface == @"Main"){
         if (buttonNumber == @"2"){
             
+            originalImage = [imageToDisplay.image copy];
             // point data interface
             n=1;
             UITouch *touch = [touches anyObject];
